@@ -66,6 +66,7 @@
 #include <fstream>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 // Compiler directives
 #define EDM_ML_LOGDEBUG
@@ -149,6 +150,14 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		void fillModuleClusterPlots();
 		void saveFinishedModuleClusterPlots();
 		// Distributions
+		void handleEventStatisticsForDistributions();
+		void fillPerEventDistributions();
+		Cluster getClusterDataObject(const SiPixelCluster& t_siPixelCluster, const DetId& t_detId);
+		std::vector<std::pair<Cluster, Cluster>> getClusterPairCandidateCollection(const edmNew::DetSet<SiPixelCluster>& t_siPixelClusterDetSet);
+		int areClustersPair(const Cluster& t_first, const Cluster& t_second);
+		int clusterMinPixelCol(const Cluster& t_cluster);
+		std::pair<int, int> clusterMinMaxPixelCol(const Cluster& t_cluster);
+
 		void generateHistogramCollections();
 		void savePerEventDistributions();
 		void saveDataStatisticsDistributions();
@@ -165,11 +174,13 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		const std::string m_outputFilePath;
 		TFile* m_outputFile;
 
-		// Tools
-		SiPixelCoordinates m_siPixelCoordinates;
-
 		// Data collections
 		edm::Handle<edmNew::DetSetVector<SiPixelCluster>> m_clusterCollectionHandle;
+
+		// Tools
+		SiPixelCoordinates                    m_siPixelCoordinates;
+		const TrackerGeometry*                m_trackerGeometry;
+		const PixelClusterParameterEstimator* m_pixelClusterParameterEstimator;
 
 		// States
 		const edm::Event* m_iEvent;

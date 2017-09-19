@@ -9,7 +9,7 @@ PhaseISplitClusterAnalyzer::PhaseISplitClusterAnalyzer(const edm::ParameterSet& 
 
 PhaseISplitClusterAnalyzer::~PhaseISplitClusterAnalyzer()
 {
-	// saveStatisticsPlots();
+	savePerEventDistributions();
 	m_outputFile -> Close();
 }
 
@@ -32,10 +32,18 @@ void PhaseISplitClusterAnalyzer::analyze(const edm::Event& t_iEvent, const edm::
 	m_siPixelCoordinates.init(t_iSetup);
 	// Get the cluster collection in the event
 	m_iEvent -> getByToken(m_clustersToken, m_clusterCollectionHandle);
+
+	edm::ESHandle<TrackerGeometry> trackerGeometryHandle;
+	t_iSetup.get<TrackerDigiGeometryRecord>().get(trackerGeometryHandle);
+	m_trackerGeometry = trackerGeometryHandle.product();
+
+	edm::ESHandle<PixelClusterParameterEstimator> pixelClusterParameterEstimatorHandle;
+	t_iSetup.get<TkPixelCPERecord>().get("PixelCPEGeneric", pixelClusterParameterEstimatorHandle);
+	m_pixelClusterParameterEstimator = pixelClusterParameterEstimatorHandle.product();
 	// Module cluster plots
 	handleModuleClusterPlots();
-	// Fill statisticsPlots
-	// fillStatisticsPlots();
+	// Generate statistics
+	handleEventStatisticsForDistributions();
 }
 
 void PhaseISplitClusterAnalyzer::beginRun(edm::Run const&, edm::EventSetup const&)

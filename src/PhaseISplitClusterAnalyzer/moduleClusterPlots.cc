@@ -38,7 +38,7 @@ void PhaseISplitClusterAnalyzer::fillModuleClusterPlots()
 	{
 		DetId detId(currentClusterSet.id());
 		ModuleData mod_on;
-		getModuleData(mod_on, detId);	
+		getModuleData(mod_on, detId);
 		for(int type = LOW_ETA; type != NUM_MODULE_CLUSTER_PLOT_TYPES; ++type)
 		{
 			if(mod_on.layer != moduleClusterPlotTypeDetails[type].layer ||
