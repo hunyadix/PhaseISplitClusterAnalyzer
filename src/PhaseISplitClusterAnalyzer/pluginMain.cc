@@ -7,12 +7,7 @@ PhaseISplitClusterAnalyzer::PhaseISplitClusterAnalyzer(const edm::ParameterSet& 
 	m_clustersToken = consumes<edmNew::DetSetVector<SiPixelCluster>>(edm::InputTag("siPixelClusters"));
 }
 
-PhaseISplitClusterAnalyzer::~PhaseISplitClusterAnalyzer()
-{
-	savePerEventDistributions();
-	saveCummulativeDistributions();
-	m_outputFile -> Close();
-}
+PhaseISplitClusterAnalyzer::~PhaseISplitClusterAnalyzer() {}
 
 void PhaseISplitClusterAnalyzer::beginJob()
 {
@@ -23,6 +18,9 @@ void PhaseISplitClusterAnalyzer::beginJob()
 void PhaseISplitClusterAnalyzer::endJob()
 {
 	// Don't put anything here that you want to run even if an exception is thrown
+	savePerEventDistributions();
+	saveCummulativeDistributions();
+	m_outputFile -> Close();
 }
 
 void PhaseISplitClusterAnalyzer::analyze(const edm::Event& t_iEvent, const edm::EventSetup& t_iSetup)
