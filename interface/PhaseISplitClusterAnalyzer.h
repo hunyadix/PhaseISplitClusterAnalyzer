@@ -123,9 +123,13 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		};
 		enum Distributions
 		{
-			CLUSTER_SIZE_X_TOTAL,   CLUSTER_SIZE_X_LOW_ETA,   CLUSTER_SIZE_X_HIGH_ETA,
-			CLUSTER_SIZE_Y_TOTAL,   CLUSTER_SIZE_Y_LOW_ETA,   CLUSTER_SIZE_Y_HIGH_ETA,
-			CLUSTER_SIZE_PIX_TOTAL, CLUSTER_SIZE_PIX_LOW_ETA, CLUSTER_SIZE_PIX_HIGH_ETA,
+			CLUSTER_SIZE_X_TOTAL,            CLUSTER_SIZE_X_LOW_ETA,             CLUSTER_SIZE_X_HIGH_ETA,
+			CLUSTER_SIZE_Y_TOTAL,            CLUSTER_SIZE_Y_LOW_ETA,             CLUSTER_SIZE_Y_HIGH_ETA,
+			CLUSTER_SIZE_PIX_TOTAL,          CLUSTER_SIZE_PIX_LOW_ETA,           CLUSTER_SIZE_PIX_HIGH_ETA,
+			NUMBER_OF_PIXELS_PER_COL_BPIX,   NUMBER_OF_PIXELS_PER_COL_LOW_ETA,   NUMBER_OF_PIXELS_PER_COL_HIGH_ETA,
+			CLUSTER_BOUNDARY_PIX_COLS_BPIX,  CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA,  CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA,
+			CLUSTER_LEFTMOST_PIX_COLS_BPIX,  CLUSTER_LEFTMOST_PIX_COLS_LOW_ETA,  CLUSTER_LEFTMOST_PIX_COLS_HIGH_ETA,
+			CLUSTER_RIGHTMOST_PIX_COLS_BPIX, CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA, CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA,
 			NUMBER_OF_DISTRIBUTION_COUNTABLES
 		};
 	public:
@@ -151,16 +155,19 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		void saveFinishedModuleClusterPlots();
 		// Distributions
 		void handleEventStatisticsForDistributions();
+		void fillCummulativeDistributions();
 		void fillPerEventDistributions();
 		Cluster getClusterDataObject(const SiPixelCluster& t_siPixelCluster, const DetId& t_detId);
 		std::vector<std::pair<Cluster, Cluster>> getClusterPairCandidateCollection(const edmNew::DetSet<SiPixelCluster>& t_siPixelClusterDetSet);
-		int areClustersPair(const Cluster& t_first, const Cluster& t_second);
+		bool areClustersPair(const Cluster& t_first, const Cluster& t_second);
 		int clusterMinPixelCol(const Cluster& t_cluster);
-		std::pair<int, int> clusterMinMaxPixelCol(const Cluster& t_cluster);
+		std::vector<std::size_t> clusterMinColPixels(const Cluster& t_cluster);
+		std::vector<std::size_t> clusterMaxColPixels(const Cluster& t_cluster);
+		std::pair<std::vector<std::size_t>, std::vector<std::size_t>> clusterMinMaxColPixels(const Cluster& t_cluster);
 
 		void generateHistogramCollections();
+		void saveCummulativeDistributions();
 		void savePerEventDistributions();
-		void saveDataStatisticsDistributions();
 
 		// Private logic
 

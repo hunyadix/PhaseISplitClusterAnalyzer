@@ -1,0 +1,101 @@
+####################################################################################################
+####################################################################################################
+
+# Crabconfig.py example
+
+####################################################################################################
+#####################################################################################################
+
+import os
+import glob
+
+from WMCore.Configuration import Configuration
+config = Configuration()
+
+PTSdir = os.environ['CMSSW_BASE']
+
+config.section_('General')
+config.General.transferOutputs = True
+config.General.transferLogs = True
+config.General.requestName = 'TimingScanAnalysis_v3' #can be anything
+
+config.section_('JobType')
+#config.JobType.allowUndistributedCMSSW = True
+config.JobType.pluginName = 'Analysis'
+config.JobType.psetName = 'run_PhaseIPixelNtuplizer_Data_92X_cfg.py'
+config.JobType.pyCfgParams = ['dataTier=RAW', 'globalTag=92X_dataRun2_Prompt_v7', 'outputFileName=Ntuple.root']
+config.JobType.inputFiles = []
+config.JobType.outputFiles = ['Ntuple.root']
+config.JobType.disableAutomaticOutputCollection = True
+#config.JobType.priority = -1
+config.JobType.maxMemoryMB = 3000
+
+config.section_('Data')
+config.Data.inputDataset = '/ZeroBias/Run2017C-v1/RAW'
+config.Data.runRange = '300389,300390,300391,300392,300393,300394,300395,300396,300397,300398'
+config.Data.outLFNDirBase = '/store/user/ahunyadi/MinBias/PhaseINtuplizer/Run2_CMSSW92X/'
+config.Data.outputDatasetTag = 'Timingscan_Fill_6044'
+config.Data.splitting = 'LumiBased'
+config.Data.unitsPerJob = 4
+# config.Data.totalUnits = 10000000
+
+config.section_('Site')
+config.Site.storageSite = 'T2_HU_Budapest'
+
+####################################################################################################
+####################################################################################################
+
+# Dataset info
+
+####################################################################################################
+####################################################################################################
+
+Global Tag used for filling/harvesting: 92X_dataRun2_Prompt_v8
+
+das_client --limit=13000 --query "file dataset=/ZeroBias/Run2017C-PromptReco-v3/RECO run=301323"
+
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/027CA18B-7884-E711-AFB4-02163E011AE9.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/0A93F162-7884-E711-B7A8-02163E01A400.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/0C1E63C8-7884-E711-891E-02163E0119FC.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/10E41669-7884-E711-B052-02163E01A33D.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/1A0DFA61-7884-E711-B5F5-02163E01A1DA.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/26CCC561-7884-E711-8C11-02163E01A37A.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/2EFD1470-7884-E711-B3B9-02163E01A4BE.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/30B7E15A-7884-E711-9903-02163E01A5E5.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/3ED7D169-7884-E711-AEE0-02163E014210.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/46B35075-7884-E711-8943-02163E01A2EE.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/52354903-7884-E711-BF29-02163E012510.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/5A2E346C-7884-E711-92D4-02163E0146D8.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/5A4E257E-7884-E711-88C3-02163E0139B8.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/5AB18768-7884-E711-86EA-02163E019CB0.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/5ADC686B-7884-E711-BDC4-02163E01A56E.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/5EC54E5C-7884-E711-B179-02163E0144B4.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/64ACF991-7884-E711-9F7C-02163E01199F.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/6615F869-7884-E711-A440-02163E019E14.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/66F62065-7884-E711-9F1A-02163E019C51.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/66F93713-7984-E711-B0BC-02163E014761.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/742F896F-7884-E711-923C-02163E014281.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/749FCC7F-7884-E711-9698-02163E011904.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/7E3F84A5-7884-E711-BE81-02163E01381D.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/82CBF567-7884-E711-80BB-02163E0140E7.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/88261164-7884-E711-A783-02163E01A722.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/9CEB5E6A-7884-E711-BFF8-02163E019E12.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/A045666E-7884-E711-8347-02163E01A40B.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/A23BEB8C-7884-E711-8B25-02163E011B1B.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/A4945261-7884-E711-8DAA-02163E019D0A.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/AEA31C60-7884-E711-9006-02163E01A2D8.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/B027DC88-7884-E711-80A1-02163E011A0D.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/B0CED135-7A84-E711-B0D5-02163E0118BC.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/B29E8660-7884-E711-ADC5-02163E019E53.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/B2FA215A-7884-E711-B8C3-02163E01A5F7.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/B4E1CA90-7884-E711-BF76-02163E019B6C.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/B6E0825A-7884-E711-A86A-02163E0146C9.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/C2482D64-7884-E711-B94F-02163E01A273.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/CC46F0EE-7784-E711-B48A-02163E01A5B0.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/DCABCE77-7884-E711-AEBA-02163E019C3F.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/E2CD4790-7884-E711-BE67-02163E01374A.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/E4F22850-DD84-E711-8C7C-02163E0141AC.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/E8441D61-7884-E711-A267-02163E01A1C6.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/E8B7A67D-7884-E711-B8DC-02163E01200E.root
+/store/data/Run2017C/ZeroBias/RECO/PromptReco-v3/000/301/323/00000/F8B3FBAD-7884-E711-AAEA-02163E0126FD.root
+

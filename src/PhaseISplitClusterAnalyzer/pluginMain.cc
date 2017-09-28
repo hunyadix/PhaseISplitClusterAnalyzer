@@ -10,6 +10,7 @@ PhaseISplitClusterAnalyzer::PhaseISplitClusterAnalyzer(const edm::ParameterSet& 
 PhaseISplitClusterAnalyzer::~PhaseISplitClusterAnalyzer()
 {
 	savePerEventDistributions();
+	saveCummulativeDistributions();
 	m_outputFile -> Close();
 }
 
