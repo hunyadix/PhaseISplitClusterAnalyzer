@@ -301,21 +301,36 @@ void PhaseISplitClusterAnalyzer::fillPerEventDistributions()
 			}
 		}
 	}
-	avgClusterSizeXInEvent      = avgClusterSizeXInEvent      / numClustersInEvent;
-	avgClusterSizeYInEvent      = avgClusterSizeYInEvent      / numClustersInEvent;
-	avgClusterSizePixelsInEvent = avgClusterSizePixelsInEvent / numClustersInEvent;
-	avgClusterSizeXLayer1       = avgClusterSizeXLayer1       / numClustersLayer1;
-	avgClusterSizeYLayer1       = avgClusterSizeYLayer1       / numClustersLayer1;
-	avgClusterSizePixelsLayer1  = avgClusterSizePixelsLayer1  / numClustersLayer1;
-	avgClusterSizeXLayer2       = avgClusterSizeXLayer2       / numClustersLayer2;
-	avgClusterSizeYLayer2       = avgClusterSizeYLayer2       / numClustersLayer2;
-	avgClusterSizePixelsLayer2  = avgClusterSizePixelsLayer2  / numClustersLayer2;
-	avgClusterSizeXLayer3       = avgClusterSizeXLayer3       / numClustersLayer3;
-	avgClusterSizeYLayer3       = avgClusterSizeYLayer3       / numClustersLayer3;
-	avgClusterSizePixelsLayer3  = avgClusterSizePixelsLayer3  / numClustersLayer3;
-	avgClusterSizeXLayer4       = avgClusterSizeXLayer4       / numClustersLayer4;
-	avgClusterSizeYLayer4       = avgClusterSizeYLayer4       / numClustersLayer4;
-	avgClusterSizePixelsLayer4  = avgClusterSizePixelsLayer4  / numClustersLayer4;
+	if(numClustersInEvent)
+	{
+		avgClusterSizeXInEvent      = avgClusterSizeXInEvent      / numClustersInEvent;
+		avgClusterSizeYInEvent      = avgClusterSizeYInEvent      / numClustersInEvent;
+		avgClusterSizePixelsInEvent = avgClusterSizePixelsInEvent / numClustersInEvent;
+		if(numClustersLayer1)
+		{
+			avgClusterSizeXLayer1       = avgClusterSizeXLayer1       / numClustersLayer1;
+			avgClusterSizeYLayer1       = avgClusterSizeYLayer1       / numClustersLayer1;
+			avgClusterSizePixelsLayer1  = avgClusterSizePixelsLayer1  / numClustersLayer1;
+		}
+		if(numClustersLayer2)
+		{
+			avgClusterSizeXLayer2       = avgClusterSizeXLayer2       / numClustersLayer2;
+			avgClusterSizeYLayer2       = avgClusterSizeYLayer2       / numClustersLayer2;
+			avgClusterSizePixelsLayer2  = avgClusterSizePixelsLayer2  / numClustersLayer2;
+		}
+		if(numClustersLayer3)
+		{
+			avgClusterSizeXLayer3       = avgClusterSizeXLayer3       / numClustersLayer3;
+			avgClusterSizeYLayer3       = avgClusterSizeYLayer3       / numClustersLayer3;
+			avgClusterSizePixelsLayer3  = avgClusterSizePixelsLayer3  / numClustersLayer3;
+		}
+		if(numClustersLayer4)
+		{
+			avgClusterSizeXLayer4       = avgClusterSizeXLayer4       / numClustersLayer4;
+			avgClusterSizeYLayer4       = avgClusterSizeYLayer4       / numClustersLayer4;
+			avgClusterSizePixelsLayer4  = avgClusterSizePixelsLayer4  / numClustersLayer4;
+		}
+	}
 
 	m_perEventDistributions[NUM_CLUSTERS_IN_EVENT].Fill(numClustersInEvent);
 	m_perEventDistributions[NUM_CLUSTERS_LOW_ETA].Fill(numClustersLowEta);
