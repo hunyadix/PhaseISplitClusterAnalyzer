@@ -170,7 +170,6 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		void savePerEventDistributions();
 
 		// Private logic
-
 		void getModuleData(ModuleData& t_mod, const DetId& t_detId);
 
 	private:
@@ -201,11 +200,11 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		int m_eventsSinceModuleClusterPlotGeneration;
 
 		// Module cluster plots
-		std::vector<TH2F> m_moduleClusterPlots;
+		std::vector<TH2F*> m_moduleClusterPlots;
 
 		// Distributions
-		std::vector<TH1F> m_perEventDistributions;
-		std::vector<TH1F> m_distributions;
+		std::vector<TH1F*> m_perEventDistributions;
+		std::vector<TH1F*> m_distributions;
 
 		// Tokens
 		// edm::EDGetTokenT<edm::DetSetVector<SiPixelRawDataError>> rawDataErrorToken_;

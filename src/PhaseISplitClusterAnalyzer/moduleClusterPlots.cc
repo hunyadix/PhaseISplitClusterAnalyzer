@@ -2,13 +2,13 @@
 
 void PhaseISplitClusterAnalyzer::generateNewModuleClusterPlots()
 {
-	std::for_each(m_moduleClusterPlots.begin(), m_moduleClusterPlots.end(), [] (auto& e) { e.Delete(""); });
+	std::for_each(m_moduleClusterPlots.begin(), m_moduleClusterPlots.end(), [] (auto& e) { e -> Delete(""); });
 	m_moduleClusterPlots.clear();
 	for(int type = LOW_ETA; type != NUM_MODULE_CLUSTER_PLOT_TYPES; ++type)
 	{
 		std::string histogramName  = "Clusters_" + moduleClusterPlotTypeDetails[type].name + "_RUN:" + std::to_string(m_runNumber) + "_LS:" + std::to_string(m_luminosityBlock) + "_EVT:" + std::to_string(m_eventNumber);
 		std::string histogramTitle = "Clusters in event merged for " + std::to_string(MODULE_CLUSTER_PLOT_EVENTS_TO_MERGE) + "events, " + moduleClusterPlotTypeDetails[type].name + " " + std::to_string(m_runNumber) + "/" + std::to_string(m_luminosityBlock) + "/" + std::to_string(m_eventNumber) + ";y (pixels);x (pixels);";
-		m_moduleClusterPlots.emplace_back(histogramName.c_str(), histogramTitle.c_str(), 416, 0, 416, 160, 0, 160);
+		m_moduleClusterPlots.emplace_back(new TH2F(histogramName.c_str(), histogramTitle.c_str(), 416, 0, 416, 160, 0, 160));
 	}
 	m_moduleClusterPlotsGeneratedAt = std::make_tuple(m_runNumber, m_luminosityBlock, m_eventNumber);
 }
@@ -49,7 +49,7 @@ void PhaseISplitClusterAnalyzer::fillModuleClusterPlots()
 				const auto& pixels = cluster.pixels();
 				std::for_each(pixels.begin(), pixels.end(), [&] (const auto& pixel)
 				{
-					m_moduleClusterPlots[type].Fill(pixel.y, pixel.x);
+					m_moduleClusterPlots[type] -> Fill(pixel.y, pixel.x);
 					// if(pixel.x < 0 || 160 < pixel.x || pixel.y < 0 || 416 < pixel.y)
 					// {
 					// 	std::cout << "Did no pass boundary tests." << std::endl;
@@ -69,8 +69,8 @@ void PhaseISplitClusterAnalyzer::saveFinishedModuleClusterPlots()
 	m_outputFile -> cd(saveDirectoryName.c_str());
 	std::for_each(m_moduleClusterPlots.begin(), m_moduleClusterPlots.end(), [&] (auto& e)
 	{
-		e.SetDirectory(m_outputFile -> GetDirectory(saveDirectoryName.c_str()));
-		e.Write();
+		e -> SetDirectory(m_outputFile -> GetDirectory(saveDirectoryName.c_str()));
+		e -> Write();
 	});
 	m_outputFile -> cd();
 }

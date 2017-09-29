@@ -5,77 +5,77 @@ void PhaseISplitClusterAnalyzer::generateHistogramCollections()
 	// Per event distributions
 	m_perEventDistributions.clear();
 	m_perEventDistributions.reserve(NUMBER_OF_EVENT_COUNTABLES);
-	m_perEventDistributions.emplace_back("NUM_CLUSTERS_IN_EVENT",            "NUM_CLUSTERS_IN_EVENT",            50000, 0.0f, 50000.0f);
-	m_perEventDistributions.emplace_back("NUM_CLUSTERS_LOW_ETA",             "NUM_CLUSTERS_LOW_ETA",             10000, 0.0f, 10000.0f);
-	m_perEventDistributions.emplace_back("NUM_CLUSTERS_HIGH_ETA",            "NUM_CLUSTERS_HIGH_ETA",            10000, 0.0f, 10000.0f);
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_IN_EVENT",     "NUM_PAIR_CANDIDATES_IN_EVENT",     25000, 0.0f, 25000.0f);
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_LOW_ETA",      "NUM_PAIR_CANDIDATES_LOW_ETA",      5000,  0.0f, 5000.0f );
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_HIGH_ETA",     "NUM_PAIR_CANDIDATES_HIGH_ETA",     5000,  0.0f, 5000.0f );
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_IN_EVENT",     "EVEN_COL_CANDIDATES_IN_EVENT",     5000,  0.0f, 5000.0f );
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_LOW_ETA",      "EVEN_COL_CANDIDATES_LOW_ETA",      5000,  0.0f, 5000.0f );
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_HIGH_ETA",     "EVEN_COL_CANDIDATES_HIGH_ETA",     1000,  0.0f, 1000.0f );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_X_IN_EVENT",      "AVG_CLUSTER_SIZE_X_IN_EVENT",      400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_X_LOW_ETA",       "AVG_CLUSTER_SIZE_X_LOW_ETA",       400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_X_HIGH_ETA",      "AVG_CLUSTER_SIZE_X_HIGH_ETA",      400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_Y_IN_EVENT",      "AVG_CLUSTER_SIZE_Y_IN_EVENT",      400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_Y_LOW_ETA",       "AVG_CLUSTER_SIZE_Y_LOW_ETA",       400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_Y_HIGH_ETA",      "AVG_CLUSTER_SIZE_Y_HIGH_ETA",      400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_PIXELS_IN_EVENT", "AVG_CLUSTER_SIZE_PIXELS_IN_EVENT", 400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_PIXELS_LOW_ETA",  "AVG_CLUSTER_SIZE_PIXELS_LOW_ETA",  400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_PIXELS_HIGH_ETA", "AVG_CLUSTER_SIZE_PIXELS_HIGH_ETA", 400,    0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_IN_BPIX",      "NUM_PAIR_CANDIDATES_IN_BPIX",      30000, 0.0f, 30000.0f);
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_IN_FPIX",      "NUM_PAIR_CANDIDATES_IN_FPIX",      30000, 0.0f, 30000.0f);
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_IN_BPIX",      "EVEN_COL_CANDIDATES_IN_BPIX",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_IN_FPIX",      "EVEN_COL_CANDIDATES_IN_FPIX",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("NUM_CLUSTERS_LAYER_1",             "NUM_CLUSTERS_LAYER_1",             30000, 0.0f, 30000.0f);
-	m_perEventDistributions.emplace_back("NUM_CLUSTERS_LAYER_2",             "NUM_CLUSTERS_LAYER_2",             30000, 0.0f, 30000.0f);
-	m_perEventDistributions.emplace_back("NUM_CLUSTERS_LAYER_3",             "NUM_CLUSTERS_LAYER_3",             30000, 0.0f, 30000.0f);
-	m_perEventDistributions.emplace_back("NUM_CLUSTERS_LAYER_4",             "NUM_CLUSTERS_LAYER_4",             30000, 0.0f, 30000.0f);
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_LAYER_1",      "NUM_PAIR_CANDIDATES_LAYER_1",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_LAYER_2",      "NUM_PAIR_CANDIDATES_LAYER_2",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_LAYER_3",      "NUM_PAIR_CANDIDATES_LAYER_3",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("NUM_PAIR_CANDIDATES_LAYER_4",      "NUM_PAIR_CANDIDATES_LAYER_4",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_LAYER_1",      "EVEN_COL_CANDIDATES_LAYER_1",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_LAYER_2",      "EVEN_COL_CANDIDATES_LAYER_2",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_LAYER_3",      "EVEN_COL_CANDIDATES_LAYER_3",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("EVEN_COL_CANDIDATES_LAYER_4",      "EVEN_COL_CANDIDATES_LAYER_4",      15000, 0.0f, 15000.0f);
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_X_LAYER_1",       "AVG_CLUSTER_SIZE_X_LAYER_1",       400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_X_LAYER_2",       "AVG_CLUSTER_SIZE_X_LAYER_2",       400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_X_LAYER_3",       "AVG_CLUSTER_SIZE_X_LAYER_3",       400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_X_LAYER_4",       "AVG_CLUSTER_SIZE_X_LAYER_4",       400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_Y_LAYER_1",       "AVG_CLUSTER_SIZE_Y_LAYER_1",       400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_Y_LAYER_2",       "AVG_CLUSTER_SIZE_Y_LAYER_2",       400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_Y_LAYER_3",       "AVG_CLUSTER_SIZE_Y_LAYER_3",       400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_Y_LAYER_4",       "AVG_CLUSTER_SIZE_Y_LAYER_4",       400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_PIXELS_LAYER_1",  "AVG_CLUSTER_SIZE_PIXELS_LAYER_1",  400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_PIXELS_LAYER_2",  "AVG_CLUSTER_SIZE_PIXELS_LAYER_2",  400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_PIXELS_LAYER_3",  "AVG_CLUSTER_SIZE_PIXELS_LAYER_3",  400,   0.0f, 40.0f   );
-	m_perEventDistributions.emplace_back("AVG_CLUSTER_SIZE_PIXELS_LAYER_4",  "AVG_CLUSTER_SIZE_PIXELS_LAYER_4",  400,   0.0f, 40.0f   );
+	m_perEventDistributions.emplace_back(new TH1F("NUM_CLUSTERS_IN_EVENT",            "NUM_CLUSTERS_IN_EVENT",            50000, 0.0f, 50000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_CLUSTERS_LOW_ETA",             "NUM_CLUSTERS_LOW_ETA",             10000, 0.0f, 10000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_CLUSTERS_HIGH_ETA",            "NUM_CLUSTERS_HIGH_ETA",            10000, 0.0f, 10000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_IN_EVENT",     "NUM_PAIR_CANDIDATES_IN_EVENT",     25000, 0.0f, 25000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_LOW_ETA",      "NUM_PAIR_CANDIDATES_LOW_ETA",      5000,  0.0f, 5000.0f ));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_HIGH_ETA",     "NUM_PAIR_CANDIDATES_HIGH_ETA",     5000,  0.0f, 5000.0f ));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_IN_EVENT",     "EVEN_COL_CANDIDATES_IN_EVENT",     5000,  0.0f, 5000.0f ));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_LOW_ETA",      "EVEN_COL_CANDIDATES_LOW_ETA",      5000,  0.0f, 5000.0f ));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_HIGH_ETA",     "EVEN_COL_CANDIDATES_HIGH_ETA",     1000,  0.0f, 1000.0f ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_X_IN_EVENT",      "AVG_CLUSTER_SIZE_X_IN_EVENT",      400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_X_LOW_ETA",       "AVG_CLUSTER_SIZE_X_LOW_ETA",       400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_X_HIGH_ETA",      "AVG_CLUSTER_SIZE_X_HIGH_ETA",      400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_Y_IN_EVENT",      "AVG_CLUSTER_SIZE_Y_IN_EVENT",      400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_Y_LOW_ETA",       "AVG_CLUSTER_SIZE_Y_LOW_ETA",       400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_Y_HIGH_ETA",      "AVG_CLUSTER_SIZE_Y_HIGH_ETA",      400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_PIXELS_IN_EVENT", "AVG_CLUSTER_SIZE_PIXELS_IN_EVENT", 400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_PIXELS_LOW_ETA",  "AVG_CLUSTER_SIZE_PIXELS_LOW_ETA",  400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_PIXELS_HIGH_ETA", "AVG_CLUSTER_SIZE_PIXELS_HIGH_ETA", 400,    0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_IN_BPIX",      "NUM_PAIR_CANDIDATES_IN_BPIX",      30000, 0.0f, 30000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_IN_FPIX",      "NUM_PAIR_CANDIDATES_IN_FPIX",      30000, 0.0f, 30000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_IN_BPIX",      "EVEN_COL_CANDIDATES_IN_BPIX",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_IN_FPIX",      "EVEN_COL_CANDIDATES_IN_FPIX",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_CLUSTERS_LAYER_1",             "NUM_CLUSTERS_LAYER_1",             30000, 0.0f, 30000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_CLUSTERS_LAYER_2",             "NUM_CLUSTERS_LAYER_2",             30000, 0.0f, 30000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_CLUSTERS_LAYER_3",             "NUM_CLUSTERS_LAYER_3",             30000, 0.0f, 30000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_CLUSTERS_LAYER_4",             "NUM_CLUSTERS_LAYER_4",             30000, 0.0f, 30000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_LAYER_1",      "NUM_PAIR_CANDIDATES_LAYER_1",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_LAYER_2",      "NUM_PAIR_CANDIDATES_LAYER_2",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_LAYER_3",      "NUM_PAIR_CANDIDATES_LAYER_3",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("NUM_PAIR_CANDIDATES_LAYER_4",      "NUM_PAIR_CANDIDATES_LAYER_4",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_LAYER_1",      "EVEN_COL_CANDIDATES_LAYER_1",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_LAYER_2",      "EVEN_COL_CANDIDATES_LAYER_2",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_LAYER_3",      "EVEN_COL_CANDIDATES_LAYER_3",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("EVEN_COL_CANDIDATES_LAYER_4",      "EVEN_COL_CANDIDATES_LAYER_4",      15000, 0.0f, 15000.0f));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_X_LAYER_1",       "AVG_CLUSTER_SIZE_X_LAYER_1",       400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_X_LAYER_2",       "AVG_CLUSTER_SIZE_X_LAYER_2",       400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_X_LAYER_3",       "AVG_CLUSTER_SIZE_X_LAYER_3",       400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_X_LAYER_4",       "AVG_CLUSTER_SIZE_X_LAYER_4",       400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_Y_LAYER_1",       "AVG_CLUSTER_SIZE_Y_LAYER_1",       400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_Y_LAYER_2",       "AVG_CLUSTER_SIZE_Y_LAYER_2",       400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_Y_LAYER_3",       "AVG_CLUSTER_SIZE_Y_LAYER_3",       400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_Y_LAYER_4",       "AVG_CLUSTER_SIZE_Y_LAYER_4",       400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_PIXELS_LAYER_1",  "AVG_CLUSTER_SIZE_PIXELS_LAYER_1",  400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_PIXELS_LAYER_2",  "AVG_CLUSTER_SIZE_PIXELS_LAYER_2",  400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_PIXELS_LAYER_3",  "AVG_CLUSTER_SIZE_PIXELS_LAYER_3",  400,   0.0f, 40.0f   ));
+	m_perEventDistributions.emplace_back(new TH1F("AVG_CLUSTER_SIZE_PIXELS_LAYER_4",  "AVG_CLUSTER_SIZE_PIXELS_LAYER_4",  400,   0.0f, 40.0f   ));
 	m_perEventDistributions.shrink_to_fit();
 	
 	// General distributions
 	m_distributions.clear();
-	m_distributions.emplace_back("CLUSTER_SIZE_X_TOTAL",                "CLUSTER_SIZE_X_TOTAL",                20, 0.0f, 20.0f);
-	m_distributions.emplace_back("CLUSTER_SIZE_X_LOW_ETA",              "CLUSTER_SIZE_X_LOW_ETA",              20, 0.0f, 20.0f);
-	m_distributions.emplace_back("CLUSTER_SIZE_X_HIGH_ETA",             "CLUSTER_SIZE_X_HIGH_ETA",             20, 0.0f, 20.0f);
-	m_distributions.emplace_back("CLUSTER_SIZE_Y_TOTAL",                "CLUSTER_SIZE_Y_TOTAL",                20, 0.0f, 20.0f);
-	m_distributions.emplace_back("CLUSTER_SIZE_Y_LOW_ETA",              "CLUSTER_SIZE_Y_LOW_ETA",              20, 0.0f, 20.0f);
-	m_distributions.emplace_back("CLUSTER_SIZE_Y_HIGH_ETA",             "CLUSTER_SIZE_Y_HIGH_ETA",             20, 0.0f, 20.0f);
-	m_distributions.emplace_back("CLUSTER_SIZE_PIX_TOTAL",              "CLUSTER_SIZE_PIX_TOTAL",              50, 0.0f, 50.0f);
-	m_distributions.emplace_back("CLUSTER_SIZE_PIX_LOW_ETA",            "CLUSTER_SIZE_PIX_LOW_ETA",            50, 0.0f, 50.0f);
-	m_distributions.emplace_back("CLUSTER_SIZE_PIX_HIGH_ETA",           "CLUSTER_SIZE_PIX_HIGH_ETA",           50, 0.0f, 50.0f);
-	m_distributions.emplace_back("NUMBER_OF_PIXELS_PER_COL_BPIX",       "NUMBER_OF_PIXELS_PER_COL_BPIX",       450, 0.0f, 450.0f);
-	m_distributions.emplace_back("NUMBER_OF_PIXELS_PER_COL_LOW_ETA",    "NUMBER_OF_PIXELS_PER_COL_LOW_ETA",    450, 0.0f, 450.0f);
-	m_distributions.emplace_back("NUMBER_OF_PIXELS_PER_COL_HIGH_ETA",   "NUMBER_OF_PIXELS_PER_COL_HIGH_ETA",   450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_BOUNDARY_PIX_COLS_BPIX",      "CLUSTER_BOUNDARY_PIX_COLS_BPIX",      450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA",   "CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA",   450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA",  "CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA",  450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_LEFTMOST_PIX_COLS_BPIX",      "CLUSTER_LEFTMOST_PIX_COLS_BPIX",      450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_LEFTMOST_PIX_COLS_LOW_ETA",   "CLUSTER_LEFTMOST_PIX_COLS_LOW_ETA",   450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_LEFTMOST_PIX_COLS_HIGH_ETA",  "CLUSTER_LEFTMOST_PIX_COLS_HIGH_ETA",  450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_RIGHTMOST_PIX_COLS_BPIX",     "CLUSTER_RIGHTMOST_PIX_COLS_BPIX",     450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA",  "CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA",  450, 0.0f, 450.0f);
-	m_distributions.emplace_back("CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA", "CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA", 450, 0.0f, 450.0f);
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_X_TOTAL",                "CLUSTER_SIZE_X_TOTAL",                20, 0.0f, 20.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_X_LOW_ETA",              "CLUSTER_SIZE_X_LOW_ETA",              20, 0.0f, 20.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_X_HIGH_ETA",             "CLUSTER_SIZE_X_HIGH_ETA",             20, 0.0f, 20.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_Y_TOTAL",                "CLUSTER_SIZE_Y_TOTAL",                20, 0.0f, 20.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_Y_LOW_ETA",              "CLUSTER_SIZE_Y_LOW_ETA",              20, 0.0f, 20.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_Y_HIGH_ETA",             "CLUSTER_SIZE_Y_HIGH_ETA",             20, 0.0f, 20.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_PIX_TOTAL",              "CLUSTER_SIZE_PIX_TOTAL",              50, 0.0f, 50.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_PIX_LOW_ETA",            "CLUSTER_SIZE_PIX_LOW_ETA",            50, 0.0f, 50.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_SIZE_PIX_HIGH_ETA",           "CLUSTER_SIZE_PIX_HIGH_ETA",           50, 0.0f, 50.0f));
+	m_distributions.emplace_back(new TH1F("NUMBER_OF_PIXELS_PER_COL_BPIX",       "NUMBER_OF_PIXELS_PER_COL_BPIX",       450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("NUMBER_OF_PIXELS_PER_COL_LOW_ETA",    "NUMBER_OF_PIXELS_PER_COL_LOW_ETA",    450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("NUMBER_OF_PIXELS_PER_COL_HIGH_ETA",   "NUMBER_OF_PIXELS_PER_COL_HIGH_ETA",   450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_BOUNDARY_PIX_COLS_BPIX",      "CLUSTER_BOUNDARY_PIX_COLS_BPIX",      450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA",   "CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA",   450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA",  "CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA",  450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_LEFTMOST_PIX_COLS_BPIX",      "CLUSTER_LEFTMOST_PIX_COLS_BPIX",      450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_LEFTMOST_PIX_COLS_LOW_ETA",   "CLUSTER_LEFTMOST_PIX_COLS_LOW_ETA",   450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_LEFTMOST_PIX_COLS_HIGH_ETA",  "CLUSTER_LEFTMOST_PIX_COLS_HIGH_ETA",  450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_RIGHTMOST_PIX_COLS_BPIX",     "CLUSTER_RIGHTMOST_PIX_COLS_BPIX",     450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA",  "CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA",  450, 0.0f, 450.0f));
+	m_distributions.emplace_back(new TH1F("CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA", "CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA", 450, 0.0f, 450.0f));
 
 	m_distributions.shrink_to_fit();
 }
@@ -98,45 +98,45 @@ void PhaseISplitClusterAnalyzer::fillCummulativeDistributions()
 			getModuleData(mod_on, detId);
 			int minPixelCol = cluster.minPixelCol();
 			int maxPixelCol = cluster.maxPixelCol();
-			m_distributions[CLUSTER_SIZE_X_TOTAL].Fill(cluster.sizeX());
-			m_distributions[CLUSTER_SIZE_Y_TOTAL].Fill(cluster.sizeY());
-			m_distributions[CLUSTER_SIZE_PIX_TOTAL].Fill(cluster.size());
-			m_distributions[CLUSTER_BOUNDARY_PIX_COLS_BPIX].Fill(minPixelCol);
-			m_distributions[CLUSTER_BOUNDARY_PIX_COLS_BPIX].Fill(maxPixelCol);
-			m_distributions[CLUSTER_LEFTMOST_PIX_COLS_BPIX].Fill(minPixelCol);
-			m_distributions[CLUSTER_RIGHTMOST_PIX_COLS_BPIX].Fill(maxPixelCol);
+			m_distributions[CLUSTER_SIZE_X_TOTAL]            -> Fill(cluster.sizeX());
+			m_distributions[CLUSTER_SIZE_Y_TOTAL]            -> Fill(cluster.sizeY());
+			m_distributions[CLUSTER_SIZE_PIX_TOTAL]          -> Fill(cluster.size());
+			m_distributions[CLUSTER_BOUNDARY_PIX_COLS_BPIX]  -> Fill(minPixelCol);
+			m_distributions[CLUSTER_BOUNDARY_PIX_COLS_BPIX]  -> Fill(maxPixelCol);
+			m_distributions[CLUSTER_LEFTMOST_PIX_COLS_BPIX]  -> Fill(minPixelCol);
+			m_distributions[CLUSTER_RIGHTMOST_PIX_COLS_BPIX] -> Fill(maxPixelCol);
 			if(std::abs(mod_on.module) == 1)
 			{
-				m_distributions[CLUSTER_SIZE_X_LOW_ETA].Fill(cluster.sizeX());
-				m_distributions[CLUSTER_SIZE_Y_LOW_ETA].Fill(cluster.sizeY());
-				m_distributions[CLUSTER_SIZE_PIX_LOW_ETA].Fill(cluster.size());
-				m_distributions[CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA].Fill(minPixelCol);
-				m_distributions[CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA].Fill(maxPixelCol);
-				m_distributions[CLUSTER_LEFTMOST_PIX_COLS_LOW_ETA].Fill(minPixelCol);
-				m_distributions[CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA].Fill(maxPixelCol);
+				m_distributions[CLUSTER_SIZE_X_LOW_ETA]             -> Fill(cluster.sizeX());
+				m_distributions[CLUSTER_SIZE_Y_LOW_ETA]             -> Fill(cluster.sizeY());
+				m_distributions[CLUSTER_SIZE_PIX_LOW_ETA]           -> Fill(cluster.size());
+				m_distributions[CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA]  -> Fill(minPixelCol);
+				m_distributions[CLUSTER_BOUNDARY_PIX_COLS_LOW_ETA]  -> Fill(maxPixelCol);
+				m_distributions[CLUSTER_LEFTMOST_PIX_COLS_LOW_ETA]  -> Fill(minPixelCol);
+				m_distributions[CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA] -> Fill(maxPixelCol);
 			}
 
 			if(std::abs(mod_on.module) == 4)
 			{
-				m_distributions[CLUSTER_SIZE_X_HIGH_ETA].Fill(cluster.sizeX());
-				m_distributions[CLUSTER_SIZE_Y_HIGH_ETA].Fill(cluster.sizeY());
-				m_distributions[CLUSTER_SIZE_PIX_HIGH_ETA].Fill(cluster.size());
-				m_distributions[CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA].Fill(minPixelCol);
-				m_distributions[CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA].Fill(maxPixelCol);
-				m_distributions[CLUSTER_LEFTMOST_PIX_COLS_HIGH_ETA].Fill(minPixelCol);
-				m_distributions[CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA].Fill(maxPixelCol);
+				m_distributions[CLUSTER_SIZE_X_HIGH_ETA]             -> Fill(cluster.sizeX());
+				m_distributions[CLUSTER_SIZE_Y_HIGH_ETA]             -> Fill(cluster.sizeY());
+				m_distributions[CLUSTER_SIZE_PIX_HIGH_ETA]           -> Fill(cluster.size());
+				m_distributions[CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA]  -> Fill(minPixelCol);
+				m_distributions[CLUSTER_BOUNDARY_PIX_COLS_HIGH_ETA]  -> Fill(maxPixelCol);
+				m_distributions[CLUSTER_LEFTMOST_PIX_COLS_HIGH_ETA]  -> Fill(minPixelCol);
+				m_distributions[CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA] -> Fill(maxPixelCol);
 			}
 			// Location of each of the digis
 			for(const auto& pixel: cluster.pixels())
 			{
-				m_distributions[NUMBER_OF_PIXELS_PER_COL_BPIX].Fill(pixel.y);
+				m_distributions[NUMBER_OF_PIXELS_PER_COL_BPIX] -> Fill(pixel.y);
 				if(std::abs(mod_on.module) == 1)
 				{
-					m_distributions[NUMBER_OF_PIXELS_PER_COL_LOW_ETA].Fill(pixel.y);
+					m_distributions[NUMBER_OF_PIXELS_PER_COL_LOW_ETA] -> Fill(pixel.y);
 				}
 				if(std::abs(mod_on.module) == 4)
 				{
-					m_distributions[NUMBER_OF_PIXELS_PER_COL_HIGH_ETA].Fill(pixel.y);
+					m_distributions[NUMBER_OF_PIXELS_PER_COL_HIGH_ETA] -> Fill(pixel.y);
 				}
 			}
 		}
@@ -332,52 +332,52 @@ void PhaseISplitClusterAnalyzer::fillPerEventDistributions()
 		}
 	}
 
-	m_perEventDistributions[NUM_CLUSTERS_IN_EVENT].Fill(numClustersInEvent);
-	m_perEventDistributions[NUM_CLUSTERS_LOW_ETA].Fill(numClustersLowEta);
-	m_perEventDistributions[NUM_CLUSTERS_HIGH_ETA].Fill(numClustersHighEta);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_IN_EVENT].Fill(numPairCandidatesInEvent);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_LOW_ETA].Fill(numPairCandidatesLowEta);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_HIGH_ETA].Fill(numPairCandidatesHighEta);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_IN_EVENT].Fill(evenColCandidatesInEvent);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_LOW_ETA].Fill(evenColCandidatesLowEta);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_HIGH_ETA].Fill(evenColCandidatesHighEta);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_X_IN_EVENT].Fill(avgClusterSizeXInEvent);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LOW_ETA].Fill(avgClusterSizeXLowEta);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_X_HIGH_ETA].Fill(avgClusterSizeXHighEta);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_IN_EVENT].Fill(avgClusterSizeYInEvent);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LOW_ETA].Fill(avgClusterSizeYLowEta);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_HIGH_ETA].Fill(avgClusterSizeYHighEta);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_IN_EVENT].Fill(avgClusterSizePixelsInEvent);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LOW_ETA].Fill(avgClusterSizePixelsLowEta);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_HIGH_ETA].Fill(avgClusterSizePixelsHighEta);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_IN_BPIX].Fill(numPairCandidatesInBpix);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_IN_FPIX].Fill(numPairCandidatesInFpix);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_IN_BPIX].Fill(evenColCandidatesInBpix);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_IN_FPIX].Fill(evenColCandidatesInFpix);
-	m_perEventDistributions[NUM_CLUSTERS_LAYER_1].Fill(numClustersLayer1);
-	m_perEventDistributions[NUM_CLUSTERS_LAYER_2].Fill(numClustersLayer2);
-	m_perEventDistributions[NUM_CLUSTERS_LAYER_3].Fill(numClustersLayer3);
-	m_perEventDistributions[NUM_CLUSTERS_LAYER_4].Fill(numClustersLayer4);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_LAYER_1].Fill(numPairCandidatesLayer1);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_LAYER_2].Fill(numPairCandidatesLayer2);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_LAYER_3].Fill(numPairCandidatesLayer3);
-	m_perEventDistributions[NUM_PAIR_CANDIDATES_LAYER_4].Fill(numPairCandidatesLayer4);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_LAYER_1].Fill(evenColCandidatesLayer1);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_LAYER_2].Fill(evenColCandidatesLayer2);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_LAYER_3].Fill(evenColCandidatesLayer3);
-	m_perEventDistributions[EVEN_COL_CANDIDATES_LAYER_4].Fill(evenColCandidatesLayer4);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LAYER_1].Fill(avgClusterSizeXLayer1);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LAYER_2].Fill(avgClusterSizeXLayer2);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LAYER_3].Fill(avgClusterSizeXLayer3);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LAYER_4].Fill(avgClusterSizeXLayer4);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LAYER_1].Fill(avgClusterSizeYLayer1);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LAYER_2].Fill(avgClusterSizeYLayer2);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LAYER_3].Fill(avgClusterSizeYLayer3);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LAYER_4].Fill(avgClusterSizeYLayer4);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_1].Fill(avgClusterSizePixelsLayer1);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_2].Fill(avgClusterSizePixelsLayer2);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_3].Fill(avgClusterSizePixelsLayer3);
-	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_4].Fill(avgClusterSizePixelsLayer4);
+	m_perEventDistributions[NUM_CLUSTERS_IN_EVENT]            -> Fill(numClustersInEvent);
+	m_perEventDistributions[NUM_CLUSTERS_LOW_ETA]             -> Fill(numClustersLowEta);
+	m_perEventDistributions[NUM_CLUSTERS_HIGH_ETA]            -> Fill(numClustersHighEta);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_IN_EVENT]     -> Fill(numPairCandidatesInEvent);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_LOW_ETA]      -> Fill(numPairCandidatesLowEta);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_HIGH_ETA]     -> Fill(numPairCandidatesHighEta);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_IN_EVENT]     -> Fill(evenColCandidatesInEvent);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_LOW_ETA]      -> Fill(evenColCandidatesLowEta);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_HIGH_ETA]     -> Fill(evenColCandidatesHighEta);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_X_IN_EVENT]      -> Fill(avgClusterSizeXInEvent);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LOW_ETA]       -> Fill(avgClusterSizeXLowEta);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_X_HIGH_ETA]      -> Fill(avgClusterSizeXHighEta);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_IN_EVENT]      -> Fill(avgClusterSizeYInEvent);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LOW_ETA]       -> Fill(avgClusterSizeYLowEta);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_HIGH_ETA]      -> Fill(avgClusterSizeYHighEta);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_IN_EVENT] -> Fill(avgClusterSizePixelsInEvent);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LOW_ETA]  -> Fill(avgClusterSizePixelsLowEta);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_HIGH_ETA] -> Fill(avgClusterSizePixelsHighEta);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_IN_BPIX]      -> Fill(numPairCandidatesInBpix);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_IN_FPIX]      -> Fill(numPairCandidatesInFpix);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_IN_BPIX]      -> Fill(evenColCandidatesInBpix);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_IN_FPIX]      -> Fill(evenColCandidatesInFpix);
+	m_perEventDistributions[NUM_CLUSTERS_LAYER_1]             -> Fill(numClustersLayer1);
+	m_perEventDistributions[NUM_CLUSTERS_LAYER_2]             -> Fill(numClustersLayer2);
+	m_perEventDistributions[NUM_CLUSTERS_LAYER_3]             -> Fill(numClustersLayer3);
+	m_perEventDistributions[NUM_CLUSTERS_LAYER_4]             -> Fill(numClustersLayer4);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_LAYER_1]      -> Fill(numPairCandidatesLayer1);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_LAYER_2]      -> Fill(numPairCandidatesLayer2);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_LAYER_3]      -> Fill(numPairCandidatesLayer3);
+	m_perEventDistributions[NUM_PAIR_CANDIDATES_LAYER_4]      -> Fill(numPairCandidatesLayer4);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_LAYER_1]      -> Fill(evenColCandidatesLayer1);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_LAYER_2]      -> Fill(evenColCandidatesLayer2);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_LAYER_3]      -> Fill(evenColCandidatesLayer3);
+	m_perEventDistributions[EVEN_COL_CANDIDATES_LAYER_4]      -> Fill(evenColCandidatesLayer4);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LAYER_1]       -> Fill(avgClusterSizeXLayer1);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LAYER_2]       -> Fill(avgClusterSizeXLayer2);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LAYER_3]       -> Fill(avgClusterSizeXLayer3);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_X_LAYER_4]       -> Fill(avgClusterSizeXLayer4);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LAYER_1]       -> Fill(avgClusterSizeYLayer1);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LAYER_2]       -> Fill(avgClusterSizeYLayer2);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LAYER_3]       -> Fill(avgClusterSizeYLayer3);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_Y_LAYER_4]       -> Fill(avgClusterSizeYLayer4);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_1]  -> Fill(avgClusterSizePixelsLayer1);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_2]  -> Fill(avgClusterSizePixelsLayer2);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_3]  -> Fill(avgClusterSizePixelsLayer3);
+	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_4]  -> Fill(avgClusterSizePixelsLayer4);
 }
 
 Cluster PhaseISplitClusterAnalyzer::getClusterDataObject(const SiPixelCluster& t_siPixelCluster, const DetId& t_detId)
@@ -554,8 +554,8 @@ void PhaseISplitClusterAnalyzer::saveCummulativeDistributions()
 	m_outputFile -> cd(saveDirectoryName.c_str());
 	std::for_each(m_distributions.begin(), m_distributions.end(), [&] (auto& e)
 	{
-		e.SetDirectory(m_outputFile -> GetDirectory(saveDirectoryName.c_str()));
-		e.Write();
+		e -> SetDirectory(m_outputFile -> GetDirectory(saveDirectoryName.c_str()));
+		e -> Write();
 	});
 	m_outputFile -> cd();
 }
@@ -569,8 +569,8 @@ void PhaseISplitClusterAnalyzer::savePerEventDistributions()
 	m_outputFile -> cd(saveDirectoryName.c_str());
 	std::for_each(m_perEventDistributions.begin(), m_perEventDistributions.end(), [&] (auto& e)
 	{
-		e.SetDirectory(m_outputFile -> GetDirectory(saveDirectoryName.c_str()));
-		e.Write();
+		e -> SetDirectory(m_outputFile -> GetDirectory(saveDirectoryName.c_str()));
+		e -> Write();
 	});
 	m_outputFile -> cd();
 }
