@@ -76,14 +76,45 @@ void PhaseISplitClusterAnalyzer::generateHistogramCollections()
 	m_distributions.emplace_back(new TH1F("CLUSTER_RIGHTMOST_PIX_COLS_BPIX",     "CLUSTER_RIGHTMOST_PIX_COLS_BPIX",     450, 0.0f, 450.0f));
 	m_distributions.emplace_back(new TH1F("CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA",  "CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA",  450, 0.0f, 450.0f));
 	m_distributions.emplace_back(new TH1F("CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA", "CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA", 450, 0.0f, 450.0f));
-
 	m_distributions.shrink_to_fit();
+
+	// Pileup dependence distributions
+	m_pileupDependenceDistributions.clear();
+	m_pileupDependenceDistributions.emplace_back(new TH2F("NUM_CLUSTERS_BARREL_VS_PILEUP",             "NUM_CLUSTERS_BARREL_VS_PILEUP",             100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("NUM_CLUSTERS_FORWARD_VS_PILEUP",            "NUM_CLUSTERS_FORWARD_VS_PILEUP",            100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_X_BARREL_VS_PILEUP",       "AVG_CLUSTER_SIZE_X_BARREL_VS_PILEUP",       100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_X_FORWARD_VS_PILEUP",      "AVG_CLUSTER_SIZE_X_FORWARD_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_Y_BARREL_VS_PILEUP",       "AVG_CLUSTER_SIZE_Y_BARREL_VS_PILEUP",       100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_Y_FORWARD_VS_PILEUP",      "AVG_CLUSTER_SIZE_Y_FORWARD_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_PIXELS_BARREL_VS_PILEUP",  "AVG_CLUSTER_SIZE_PIXELS_BARREL_VS_PILEUP",  100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_PIXELS_FORWARD_VS_PILEUP", "AVG_CLUSTER_SIZE_PIXELS_FORWARD_VS_PILEUP", 100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("NUM_CLUSTERS_LAYER_1_VS_PILEUP",            "NUM_CLUSTERS_LAYER_1_VS_PILEUP",            100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("NUM_CLUSTERS_LAYER_2_VS_PILEUP",            "NUM_CLUSTERS_LAYER_2_VS_PILEUP",            100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("NUM_CLUSTERS_LAYER_3_VS_PILEUP",            "NUM_CLUSTERS_LAYER_3_VS_PILEUP",            100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("NUM_CLUSTERS_LAYER_4_VS_PILEUP",            "NUM_CLUSTERS_LAYER_4_VS_PILEUP",            100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_X_LAYER_1_VS_PILEUP",      "AVG_CLUSTER_SIZE_X_LAYER_1_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_X_LAYER_2_VS_PILEUP",      "AVG_CLUSTER_SIZE_X_LAYER_2_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_X_LAYER_3_VS_PILEUP",      "AVG_CLUSTER_SIZE_X_LAYER_3_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_X_LAYER_4_VS_PILEUP",      "AVG_CLUSTER_SIZE_X_LAYER_4_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_Y_LAYER_1_VS_PILEUP",      "AVG_CLUSTER_SIZE_Y_LAYER_1_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_Y_LAYER_2_VS_PILEUP",      "AVG_CLUSTER_SIZE_Y_LAYER_2_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_Y_LAYER_3_VS_PILEUP",      "AVG_CLUSTER_SIZE_Y_LAYER_3_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_Y_LAYER_4_VS_PILEUP",      "AVG_CLUSTER_SIZE_Y_LAYER_4_VS_PILEUP",      100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_PIXELS_LAYER_1_VS_PILEUP", "AVG_CLUSTER_SIZE_PIXELS_LAYER_1_VS_PILEUP", 100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_PIXELS_LAYER_2_VS_PILEUP", "AVG_CLUSTER_SIZE_PIXELS_LAYER_2_VS_PILEUP", 100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_PIXELS_LAYER_3_VS_PILEUP", "AVG_CLUSTER_SIZE_PIXELS_LAYER_3_VS_PILEUP", 100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_CLUSTER_SIZE_PIXELS_LAYER_4_VS_PILEUP", "AVG_CLUSTER_SIZE_PIXELS_LAYER_4_VS_PILEUP", 100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("EVEN_COL_CLUSTER_RATE_TOTAL_VS_PILEUP",     "EVEN_COL_CLUSTER_RATE_TOTAL_VS_PILEUP",     100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP",   "EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP",   100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.emplace_back(new TH2F("EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP",  "EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP",  100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
+	m_pileupDependenceDistributions.shrink_to_fit();
+
 }
 
 void PhaseISplitClusterAnalyzer::handleEventStatisticsForDistributions()
 {
 	fillCummulativeDistributions();
-	fillPerEventDistributions();
+	fillPerEventAndPileupDependenceDistributions();
 }
 
 void PhaseISplitClusterAnalyzer::fillCummulativeDistributions()
@@ -143,54 +174,67 @@ void PhaseISplitClusterAnalyzer::fillCummulativeDistributions()
 	}
 }
 
-void PhaseISplitClusterAnalyzer::fillPerEventDistributions()
+void PhaseISplitClusterAnalyzer::fillPerEventAndPileupDependenceDistributions()
 {
-	int numClustersInEvent          = 0;
-	int numClustersLowEta           = 0;
-	int numClustersHighEta          = 0;
-	int numPairCandidatesInEvent    = 0;
-	int numPairCandidatesLowEta     = 0;
-	int numPairCandidatesHighEta    = 0;
-	int evenColCandidatesInEvent    = 0;
-	int evenColCandidatesLowEta     = 0;
-	int evenColCandidatesHighEta    = 0;
-	int avgClusterSizeXInEvent      = 0;
-	int avgClusterSizeXLowEta       = 0;
-	int avgClusterSizeXHighEta      = 0;
-	int avgClusterSizeYInEvent      = 0;
-	int avgClusterSizeYLowEta       = 0;
-	int avgClusterSizeYHighEta      = 0;
-	int avgClusterSizePixelsInEvent = 0;
-	int avgClusterSizePixelsLowEta  = 0;
-	int avgClusterSizePixelsHighEta = 0;
-	int numPairCandidatesInBpix     = 0;
-	int numPairCandidatesInFpix     = 0;
-	int evenColCandidatesInBpix     = 0;
-	int evenColCandidatesInFpix     = 0;
-	int numClustersLayer1           = 0;
-	int numClustersLayer2           = 0;
-	int numClustersLayer3           = 0;
-	int numClustersLayer4           = 0;
-	int numPairCandidatesLayer1     = 0;
-	int numPairCandidatesLayer2     = 0;
-	int numPairCandidatesLayer3     = 0;
-	int numPairCandidatesLayer4     = 0;
-	int evenColCandidatesLayer1     = 0;
-	int evenColCandidatesLayer2     = 0;
-	int evenColCandidatesLayer3     = 0;
-	int evenColCandidatesLayer4     = 0;
-	int avgClusterSizeXLayer1       = 0;
-	int avgClusterSizeXLayer2       = 0;
-	int avgClusterSizeXLayer3       = 0;
-	int avgClusterSizeXLayer4       = 0;
-	int avgClusterSizeYLayer1       = 0;
-	int avgClusterSizeYLayer2       = 0;
-	int avgClusterSizeYLayer3       = 0;
-	int avgClusterSizeYLayer4       = 0;
-	int avgClusterSizePixelsLayer1  = 0;
-	int avgClusterSizePixelsLayer2  = 0;
-	int avgClusterSizePixelsLayer3  = 0;
-	int avgClusterSizePixelsLayer4  = 0;
+	std::cout << __PRETTY_FUNCTION__ << ": " << __LINE__ << std::endl;
+	std::cout << "m_pileup: " << m_pileup << std::endl;
+	int numClustersInEvent            = 0;
+	int numClustersBarrel             = 0;
+	int numClustersForward            = 0;
+	int avgClusterSizeXOnBarrel       = 0;
+	int avgClusterSizeYOnBarrel       = 0;
+	int avgClusterSizePixelsOnBarrel  = 0;
+	int avgClusterSizeXOnForward      = 0;
+	int avgClusterSizeYOnForward      = 0;
+	int avgClusterSizePixelsOnForward = 0;
+	int numClustersLowEta             = 0;
+	int numClustersHighEta            = 0;
+	int numPairCandidatesInEvent      = 0;
+	int numPairCandidatesLowEta       = 0;
+	int numPairCandidatesHighEta      = 0;
+	int evenColCandidatesInEvent      = 0;
+	int evenColCandidatesLowEta       = 0;
+	int evenColCandidatesHighEta      = 0;
+	int avgClusterSizeXInEvent        = 0;
+	int avgClusterSizeXLowEta         = 0;
+	int avgClusterSizeXHighEta        = 0;
+	int avgClusterSizeYInEvent        = 0;
+	int avgClusterSizeYLowEta         = 0;
+	int avgClusterSizeYHighEta        = 0;
+	int avgClusterSizePixelsInEvent   = 0;
+	int avgClusterSizePixelsLowEta    = 0;
+	int avgClusterSizePixelsHighEta   = 0;
+	int numPairCandidatesInBpix       = 0;
+	int numPairCandidatesInFpix       = 0;
+	int evenColCandidatesInBpix       = 0;
+	int evenColCandidatesInFpix       = 0;
+	int numClustersLayer1             = 0;
+	int numClustersLayer2             = 0;
+	int numClustersLayer3             = 0;
+	int numClustersLayer4             = 0;
+	int numPairCandidatesLayer1       = 0;
+	int numPairCandidatesLayer2       = 0;
+	int numPairCandidatesLayer3       = 0;
+	int numPairCandidatesLayer4       = 0;
+	int evenColCandidatesLayer1       = 0;
+	int evenColCandidatesLayer2       = 0;
+	int evenColCandidatesLayer3       = 0;
+	int evenColCandidatesLayer4       = 0;
+	int avgClusterSizeXLayer1         = 0;
+	int avgClusterSizeXLayer2         = 0;
+	int avgClusterSizeXLayer3         = 0;
+	int avgClusterSizeXLayer4         = 0;
+	int avgClusterSizeYLayer1         = 0;
+	int avgClusterSizeYLayer2         = 0;
+	int avgClusterSizeYLayer3         = 0;
+	int avgClusterSizeYLayer4         = 0;
+	int avgClusterSizePixelsLayer1    = 0;
+	int avgClusterSizePixelsLayer2    = 0;
+	int avgClusterSizePixelsLayer3    = 0;
+	int avgClusterSizePixelsLayer4    = 0;
+	int evenColClustersTotal          = 0;
+	int evenColClustersLowEta         = 0;
+	int evenColClustersHighEta        = 0;
 	for(auto moduleIt = m_clusterCollectionHandle -> begin(), moduleEndIt = m_clusterCollectionHandle -> end(); moduleIt != moduleEndIt; ++moduleIt)
 	{
 		const auto& clusterCollectionOnModule = *moduleIt;
@@ -203,21 +247,31 @@ void PhaseISplitClusterAnalyzer::fillPerEventDistributions()
 			avgClusterSizeXInEvent += cluster.sizeX();
 			avgClusterSizeYInEvent += cluster.sizeY();
 			avgClusterSizePixelsInEvent += cluster.size();
+			int maxPixelCol = cluster.maxPixelCol();
+			if(maxPixelCol % 2 == 0) evenColClustersTotal++;
 			if(mod_on.det == 0)
 			{
+				numClustersBarrel++;
+				avgClusterSizeXOnBarrel      += cluster.sizeX();
+				avgClusterSizeYOnBarrel      += cluster.sizeY();
+				avgClusterSizePixelsOnBarrel += cluster.size();
 				if(std::abs(mod_on.module) == 1)
 				{
 					numClustersLowEta++;
+					if(maxPixelCol % 2 == 0) evenColClustersLowEta++;
 					avgClusterSizeXLowEta += cluster.sizeX();
 					avgClusterSizeYLowEta += cluster.sizeY();
 					avgClusterSizePixelsLowEta += cluster.size();
+
 				}
 				if(std::abs(mod_on.module) == 4)
 				{
 					numClustersHighEta++;
+					if(maxPixelCol % 2 == 0) evenColClustersHighEta++;
 					avgClusterSizeXHighEta += cluster.sizeX();
 					avgClusterSizeYHighEta += cluster.sizeY();
 					avgClusterSizePixelsHighEta += cluster.size();
+
 				}
 				if(mod_on.layer == 1)
 				{
@@ -247,6 +301,13 @@ void PhaseISplitClusterAnalyzer::fillPerEventDistributions()
 					avgClusterSizeYLayer4      += cluster.sizeY();
 					avgClusterSizePixelsLayer4 += cluster.size();
 				}
+			}
+			if(mod_on.det == 1)
+			{
+				numClustersForward++;
+				avgClusterSizeXOnForward      += cluster.sizeX();
+				avgClusterSizeYOnForward      += cluster.sizeY();
+				avgClusterSizePixelsOnForward += cluster.size();
 			}
 			// Pair statistics
 			std::vector<std::pair<Cluster, Cluster>> clusterPairCandidateCollection(getClusterPairCandidateCollection(clusterCollectionOnModule));
@@ -306,6 +367,18 @@ void PhaseISplitClusterAnalyzer::fillPerEventDistributions()
 		avgClusterSizeXInEvent      = avgClusterSizeXInEvent      / numClustersInEvent;
 		avgClusterSizeYInEvent      = avgClusterSizeYInEvent      / numClustersInEvent;
 		avgClusterSizePixelsInEvent = avgClusterSizePixelsInEvent / numClustersInEvent;
+		if(numClustersBarrel)
+		{
+			avgClusterSizeXOnBarrel      = avgClusterSizeXOnBarrel / numClustersBarrel;
+			avgClusterSizeYOnBarrel      = avgClusterSizeYOnBarrel / numClustersBarrel;
+			avgClusterSizePixelsOnBarrel = avgClusterSizePixelsOnBarrel / numClustersBarrel;
+		}
+		if(numClustersForward)
+		{
+			avgClusterSizeXOnForward      = avgClusterSizeXOnForward / numClustersForward;
+			avgClusterSizeYOnForward      = avgClusterSizeYOnForward / numClustersForward;
+			avgClusterSizePixelsOnForward = avgClusterSizePixelsOnForward / numClustersForward;
+		}
 		if(numClustersLayer1)
 		{
 			avgClusterSizeXLayer1       = avgClusterSizeXLayer1       / numClustersLayer1;
@@ -378,6 +451,38 @@ void PhaseISplitClusterAnalyzer::fillPerEventDistributions()
 	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_2]  -> Fill(avgClusterSizePixelsLayer2);
 	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_3]  -> Fill(avgClusterSizePixelsLayer3);
 	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_4]  -> Fill(avgClusterSizePixelsLayer4);
+
+	// Pileup dependence distributions
+	// Barrel-forward comparison
+	m_pileupDependenceDistributions[NUM_CLUSTERS_BARREL_VS_PILEUP]             -> Fill(m_pileup, numClustersBarrel);
+	m_pileupDependenceDistributions[NUM_CLUSTERS_FORWARD_VS_PILEUP]            -> Fill(m_pileup, numClustersForward);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_X_BARREL_VS_PILEUP]       -> Fill(m_pileup, avgClusterSizeXOnBarrel);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_X_FORWARD_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeXOnForward);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_Y_BARREL_VS_PILEUP]       -> Fill(m_pileup, avgClusterSizeYOnBarrel);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_Y_FORWARD_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeYOnForward);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_PIXELS_BARREL_VS_PILEUP]  -> Fill(m_pileup, avgClusterSizePixelsOnBarrel);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_PIXELS_FORWARD_VS_PILEUP] -> Fill(m_pileup, avgClusterSizePixelsOnForward);
+	// Layer level statistics
+	m_pileupDependenceDistributions[NUM_CLUSTERS_LAYER_1_VS_PILEUP]            -> Fill(m_pileup, numClustersLayer1);
+	m_pileupDependenceDistributions[NUM_CLUSTERS_LAYER_2_VS_PILEUP]            -> Fill(m_pileup, numClustersLayer2);
+	m_pileupDependenceDistributions[NUM_CLUSTERS_LAYER_3_VS_PILEUP]            -> Fill(m_pileup, numClustersLayer3);
+	m_pileupDependenceDistributions[NUM_CLUSTERS_LAYER_4_VS_PILEUP]            -> Fill(m_pileup, numClustersLayer4);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_X_LAYER_1_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeXLayer1);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_X_LAYER_2_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeXLayer2);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_X_LAYER_3_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeXLayer3);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_X_LAYER_4_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeXLayer4);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_Y_LAYER_1_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeYLayer1);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_Y_LAYER_2_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeYLayer2);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_Y_LAYER_3_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeYLayer3);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_Y_LAYER_4_VS_PILEUP]      -> Fill(m_pileup, avgClusterSizeYLayer4);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_1_VS_PILEUP] -> Fill(m_pileup, avgClusterSizePixelsLayer1);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_2_VS_PILEUP] -> Fill(m_pileup, avgClusterSizePixelsLayer2);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_3_VS_PILEUP] -> Fill(m_pileup, avgClusterSizePixelsLayer3);
+	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_4_VS_PILEUP] -> Fill(m_pileup, avgClusterSizePixelsLayer4);
+	// Others
+	// m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_TOTAL_VS_PILEUP]     -> Fill(m_pileup);
+	// m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP]   -> Fill(m_pileup);
+	// m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP]  -> Fill(m_pileup);
 }
 
 Cluster PhaseISplitClusterAnalyzer::getClusterDataObject(const SiPixelCluster& t_siPixelCluster, const DetId& t_detId)
@@ -568,6 +673,20 @@ void PhaseISplitClusterAnalyzer::savePerEventDistributions()
 	m_outputFile -> mkdir(saveDirectoryName.c_str());
 	m_outputFile -> cd(saveDirectoryName.c_str());
 	std::for_each(m_perEventDistributions.begin(), m_perEventDistributions.end(), [&] (auto& e)
+	{
+		e -> SetDirectory(m_outputFile -> GetDirectory(saveDirectoryName.c_str()));
+		e -> Write();
+	});
+	m_outputFile -> cd();
+}
+
+
+void PhaseISplitClusterAnalyzer::savePileupDependenceDistributions()
+{
+	const std::string saveDirectoryName = "PileupDependenceDistributions";
+	m_outputFile -> mkdir(saveDirectoryName.c_str());
+	m_outputFile -> cd(saveDirectoryName.c_str());
+	std::for_each(m_pileupDependenceDistributions.begin(), m_pileupDependenceDistributions.end(), [&] (auto& e)
 	{
 		e -> SetDirectory(m_outputFile -> GetDirectory(saveDirectoryName.c_str()));
 		e -> Write();

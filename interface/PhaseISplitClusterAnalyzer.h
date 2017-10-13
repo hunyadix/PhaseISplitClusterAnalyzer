@@ -45,6 +45,7 @@
 #include "RecoTracker/Record/interface/CkfComponentsRecord.h"
 #include "RecoLocalTracker/Records/interface/TkPixelCPERecord.h"
 #include "DQM/SiPixelPhase1Common/interface/SiPixelCoordinates.h"
+#include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 
 #include "../interface/DataStructures_v6.h"
 
@@ -105,20 +106,21 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		// Helper classes
 		enum PerEventCountable
 		{
-			NUM_CLUSTERS_IN_EVENT,            NUM_CLUSTERS_LOW_ETA,            NUM_CLUSTERS_HIGH_ETA,
-			NUM_PAIR_CANDIDATES_IN_EVENT,     NUM_PAIR_CANDIDATES_LOW_ETA,     NUM_PAIR_CANDIDATES_HIGH_ETA,
-			EVEN_COL_CANDIDATES_IN_EVENT,     EVEN_COL_CANDIDATES_LOW_ETA,     EVEN_COL_CANDIDATES_HIGH_ETA,
-			AVG_CLUSTER_SIZE_X_IN_EVENT,      AVG_CLUSTER_SIZE_X_LOW_ETA,      AVG_CLUSTER_SIZE_X_HIGH_ETA,
-			AVG_CLUSTER_SIZE_Y_IN_EVENT,      AVG_CLUSTER_SIZE_Y_LOW_ETA,      AVG_CLUSTER_SIZE_Y_HIGH_ETA,
-			AVG_CLUSTER_SIZE_PIXELS_IN_EVENT, AVG_CLUSTER_SIZE_PIXELS_LOW_ETA, AVG_CLUSTER_SIZE_PIXELS_HIGH_ETA,
+			NUM_CLUSTERS_IN_EVENT,            NUM_CLUSTERS_LOW_ETA,             NUM_CLUSTERS_HIGH_ETA,
+			NUM_PAIR_CANDIDATES_IN_EVENT,     NUM_PAIR_CANDIDATES_LOW_ETA,      NUM_PAIR_CANDIDATES_HIGH_ETA,
+			EVEN_COL_CANDIDATES_IN_EVENT,     EVEN_COL_CANDIDATES_LOW_ETA,      EVEN_COL_CANDIDATES_HIGH_ETA,
+			AVG_CLUSTER_SIZE_X_IN_EVENT,      AVG_CLUSTER_SIZE_X_LOW_ETA,       AVG_CLUSTER_SIZE_X_HIGH_ETA,
+			AVG_CLUSTER_SIZE_Y_IN_EVENT,      AVG_CLUSTER_SIZE_Y_LOW_ETA,       AVG_CLUSTER_SIZE_Y_HIGH_ETA,
+			AVG_CLUSTER_SIZE_PIXELS_IN_EVENT, AVG_CLUSTER_SIZE_PIXELS_LOW_ETA,  AVG_CLUSTER_SIZE_PIXELS_HIGH_ETA,
 			NUM_PAIR_CANDIDATES_IN_BPIX,      NUM_PAIR_CANDIDATES_IN_FPIX,
 			EVEN_COL_CANDIDATES_IN_BPIX,      EVEN_COL_CANDIDATES_IN_FPIX,
-			NUM_CLUSTERS_LAYER_1,             NUM_CLUSTERS_LAYER_2,             NUM_CLUSTERS_LAYER_3,            NUM_CLUSTERS_LAYER_4,
-			NUM_PAIR_CANDIDATES_LAYER_1,      NUM_PAIR_CANDIDATES_LAYER_2,      NUM_PAIR_CANDIDATES_LAYER_3,     NUM_PAIR_CANDIDATES_LAYER_4,
-			EVEN_COL_CANDIDATES_LAYER_1,      EVEN_COL_CANDIDATES_LAYER_2,      EVEN_COL_CANDIDATES_LAYER_3,     EVEN_COL_CANDIDATES_LAYER_4,
-			AVG_CLUSTER_SIZE_X_LAYER_1,       AVG_CLUSTER_SIZE_X_LAYER_2,       AVG_CLUSTER_SIZE_X_LAYER_3,      AVG_CLUSTER_SIZE_X_LAYER_4,
-			AVG_CLUSTER_SIZE_Y_LAYER_1,       AVG_CLUSTER_SIZE_Y_LAYER_2,       AVG_CLUSTER_SIZE_Y_LAYER_3,      AVG_CLUSTER_SIZE_Y_LAYER_4,
-			AVG_CLUSTER_SIZE_PIXELS_LAYER_1,  AVG_CLUSTER_SIZE_PIXELS_LAYER_2,  AVG_CLUSTER_SIZE_PIXELS_LAYER_3, AVG_CLUSTER_SIZE_PIXELS_LAYER_4,
+			NUM_CLUSTERS_LAYER_1,             NUM_CLUSTERS_LAYER_2,             NUM_CLUSTERS_LAYER_3,             NUM_CLUSTERS_LAYER_4,
+			NUM_PAIR_CANDIDATES_LAYER_1,      NUM_PAIR_CANDIDATES_LAYER_2,      NUM_PAIR_CANDIDATES_LAYER_3,      NUM_PAIR_CANDIDATES_LAYER_4,
+			EVEN_COL_CANDIDATES_LAYER_1,      EVEN_COL_CANDIDATES_LAYER_2,      EVEN_COL_CANDIDATES_LAYER_3,      EVEN_COL_CANDIDATES_LAYER_4,
+			AVG_CLUSTER_SIZE_X_LAYER_1,       AVG_CLUSTER_SIZE_X_LAYER_2,       AVG_CLUSTER_SIZE_X_LAYER_3,       AVG_CLUSTER_SIZE_X_LAYER_4,
+			AVG_CLUSTER_SIZE_Y_LAYER_1,       AVG_CLUSTER_SIZE_Y_LAYER_2,       AVG_CLUSTER_SIZE_Y_LAYER_3,       AVG_CLUSTER_SIZE_Y_LAYER_4,
+			AVG_CLUSTER_SIZE_PIXELS_LAYER_1,  AVG_CLUSTER_SIZE_PIXELS_LAYER_2,  AVG_CLUSTER_SIZE_PIXELS_LAYER_3,  AVG_CLUSTER_SIZE_PIXELS_LAYER_4,
+			EVEN_COL_CLUSTER_RATE_TOTAL,      EVEN_COL_CLUSTER_RATE_LOW_ETA,    EVEN_COL_CLUSTER_RATE_HIGH_ETA,
 			NUMBER_OF_EVENT_COUNTABLES
 		};
 		enum Distributions
@@ -132,6 +134,22 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 			CLUSTER_RIGHTMOST_PIX_COLS_BPIX, CLUSTER_RIGHTMOST_PIX_COLS_LOW_ETA, CLUSTER_RIGHTMOST_PIX_COLS_HIGH_ETA,
 			NUMBER_OF_DISTRIBUTION_COUNTABLES
 		};
+		enum m_pileupDependenceDistributions
+		{
+			// Barrel-forward comparison
+			NUM_CLUSTERS_BARREL_VS_PILEUP,              NUM_CLUSTERS_FORWARD_VS_PILEUP,
+			AVG_CLUSTER_SIZE_X_BARREL_VS_PILEUP,        AVG_CLUSTER_SIZE_X_FORWARD_VS_PILEUP,
+			AVG_CLUSTER_SIZE_Y_BARREL_VS_PILEUP,        AVG_CLUSTER_SIZE_Y_FORWARD_VS_PILEUP,
+			AVG_CLUSTER_SIZE_PIXELS_BARREL_VS_PILEUP,   AVG_CLUSTER_SIZE_PIXELS_FORWARD_VS_PILEUP,
+			// Layer level statistics
+			NUM_CLUSTERS_LAYER_1_VS_PILEUP,             NUM_CLUSTERS_LAYER_2_VS_PILEUP,             NUM_CLUSTERS_LAYER_3_VS_PILEUP,             NUM_CLUSTERS_LAYER_4_VS_PILEUP,
+			AVG_CLUSTER_SIZE_X_LAYER_1_VS_PILEUP,       AVG_CLUSTER_SIZE_X_LAYER_2_VS_PILEUP,       AVG_CLUSTER_SIZE_X_LAYER_3_VS_PILEUP,       AVG_CLUSTER_SIZE_X_LAYER_4_VS_PILEUP,
+			AVG_CLUSTER_SIZE_Y_LAYER_1_VS_PILEUP,       AVG_CLUSTER_SIZE_Y_LAYER_2_VS_PILEUP,       AVG_CLUSTER_SIZE_Y_LAYER_3_VS_PILEUP,       AVG_CLUSTER_SIZE_Y_LAYER_4_VS_PILEUP,
+			AVG_CLUSTER_SIZE_PIXELS_LAYER_1_VS_PILEUP,  AVG_CLUSTER_SIZE_PIXELS_LAYER_2_VS_PILEUP,  AVG_CLUSTER_SIZE_PIXELS_LAYER_3_VS_PILEUP,  AVG_CLUSTER_SIZE_PIXELS_LAYER_4_VS_PILEUP,
+			// Others
+			EVEN_COL_CLUSTER_RATE_TOTAL_VS_PILEUP, EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP, EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP,
+			NUMBER_OF_PILEUP_DISTRIBUTION_COUNTABLES
+		};	
 	public:
 		// EDAnalyzer base
 		PhaseISplitClusterAnalyzer(const edm::ParameterSet& t_iConfig);
@@ -145,9 +163,10 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&) override final;
 		
 		// Logic
-		void updateRunNumber();
-		void updateLuminosityBlockNumber();
-		void updateTimestamp();
+		void  updateRunNumber();
+		void  updateLuminosityBlockNumber();
+		void  updateTimestamp();
+		float getPileupInfo(const edm::Handle<std::vector<PileupSummaryInfo>>& puInfoCollectionHandle);
 		// ModuleClusterPlots		
 		void handleModuleClusterPlots();
 		void generateNewModuleClusterPlots();
@@ -156,7 +175,7 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		// Distributions
 		void handleEventStatisticsForDistributions();
 		void fillCummulativeDistributions();
-		void fillPerEventDistributions();
+		void fillPerEventAndPileupDependenceDistributions();
 		Cluster getClusterDataObject(const SiPixelCluster& t_siPixelCluster, const DetId& t_detId);
 		std::vector<std::pair<Cluster, Cluster>> getClusterPairCandidateCollection(const edmNew::DetSet<SiPixelCluster>& t_siPixelClusterDetSet);
 		bool areClustersPair(const Cluster& t_first, const Cluster& t_second);
@@ -168,6 +187,7 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		void generateHistogramCollections();
 		void saveCummulativeDistributions();
 		void savePerEventDistributions();
+		void savePileupDependenceDistributions();
 
 		// Private logic
 		void getModuleData(ModuleData& t_mod, const DetId& t_detId);
@@ -182,6 +202,7 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 
 		// Data collections
 		edm::Handle<edmNew::DetSetVector<SiPixelCluster>> m_clusterCollectionHandle;
+		edm::Handle<std::vector<PileupSummaryInfo>>       m_puInfoCollectionHandle;
 
 		// Tools
 		SiPixelCoordinates                    m_siPixelCoordinates;
@@ -190,9 +211,11 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 
 		// States
 		const edm::Event* m_iEvent;
+		bool m_isEventMC;
 		int m_runNumber;
 		int m_luminosityBlock;
 		int m_eventNumber;
+		int m_pileup;
 		// Timestamp-helpers
 		bool m_isNewRun;
 		bool m_isNewLuminosityBlock;
@@ -205,6 +228,7 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		// Distributions
 		std::vector<TH1F*> m_perEventDistributions;
 		std::vector<TH1F*> m_distributions;
+		std::vector<TH2F*> m_pileupDependenceDistributions;
 
 		// Tokens
 		// edm::EDGetTokenT<edm::DetSetVector<SiPixelRawDataError>> rawDataErrorToken_;
@@ -213,7 +237,7 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		edm::EDGetTokenT<edmNew::DetSetVector<SiPixelCluster>>   m_clustersToken;
 		// edm::EDGetTokenT<TrajTrackAssociationCollection>         trajTrackCollectionToken_;
 		// edm::EDGetTokenT<MeasurementTrackerEvent>                measurementTrackerEventToken_;
-		// edm::EDGetTokenT<std::vector<PileupSummaryInfo>>         pileupSummaryToken_;
+		edm::EDGetTokenT<std::vector<PileupSummaryInfo>>         m_pileupSummaryToken;
 		// edm::EDGetTokenT<edm::DetSetVector<PixelDigi>>           pixelDigiCollectionToken_;
 
 		// The satic assertion somehow messes up the syntax highlighting

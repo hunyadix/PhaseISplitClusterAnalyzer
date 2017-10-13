@@ -2,9 +2,12 @@
 
 PhaseISplitClusterAnalyzer::PhaseISplitClusterAnalyzer(const edm::ParameterSet& t_iConfig): 
 	m_iConfig(t_iConfig),
-	m_outputFilePath(t_iConfig.getUntrackedParameter<std::string>("outputFileName", DEFAULT_OUTPUT_FILE_PATH))
+	m_outputFilePath(t_iConfig.getUntrackedParameter<std::string>("outputFileName", DEFAULT_OUTPUT_FILE_PATH)),
+	m_isEventMC(false),
+	m_pileup(NOVAL_I)
 {
-	m_clustersToken = consumes<edmNew::DetSetVector<SiPixelCluster>>(edm::InputTag("siPixelClusters"));
+	m_clustersToken      = consumes<edmNew::DetSetVector<SiPixelCluster>>(edm::InputTag("siPixelClusters"));
+	m_pileupSummaryToken = consumes<std::vector<PileupSummaryInfo>>      (edm::InputTag("addPileupInfo"));
 }
 
 PhaseISplitClusterAnalyzer::~PhaseISplitClusterAnalyzer() {}
@@ -26,19 +29,31 @@ void PhaseISplitClusterAnalyzer::endJob()
 void PhaseISplitClusterAnalyzer::analyze(const edm::Event& t_iEvent, const edm::EventSetup& t_iSetup)
 {
 	m_iEvent = &t_iEvent;
+	// Get event type
+	m_isEventMC = m_iEvent -> id().run() == 1;
+	static bool lastEventType = !m_isEventMC;
+	if(lastEventType != m_isEventMC)
+	{
+		lastEventType = m_isEventMC;
+		std::cout << "Deduced data type: "<< (m_isEventMC ? "MONTE-CARLO" : "REAL RAW DATA") << "." << std::endl;
+	}
 	// Set the event identifiers
 	updateTimestamp();
 	m_siPixelCoordinates.init(t_iSetup);
-	// Get the cluster collection in the event
+	// Get the cluster collection for the event
 	m_iEvent -> getByToken(m_clustersToken, m_clusterCollectionHandle);
-
+	// Get the pileup information for the event
+	m_iEvent -> getByToken(m_pileupSummaryToken, m_puInfoCollectionHandle);
+	// Get the tracker geometry object
 	edm::ESHandle<TrackerGeometry> trackerGeometryHandle;
 	t_iSetup.get<TrackerDigiGeometryRecord>().get(trackerGeometryHandle);
 	m_trackerGeometry = trackerGeometryHandle.product();
-
+	// Get the pixel parameter estimator object
 	edm::ESHandle<PixelClusterParameterEstimator> pixelClusterParameterEstimatorHandle;
 	t_iSetup.get<TkPixelCPERecord>().get("PixelCPEGeneric", pixelClusterParameterEstimatorHandle);
 	m_pixelClusterParameterEstimator = pixelClusterParameterEstimatorHandle.product();
+	// Get the pileup from the pileup info object
+	m_pileup = getPileupInfo(m_puInfoCollectionHandle);
 	// Module cluster plots
 	handleModuleClusterPlots();
 	// Generate statistics
@@ -96,6 +111,24 @@ void PhaseISplitClusterAnalyzer::updateTimestamp()
 	m_eventNumber = m_iEvent -> id().event();
 }
 
+float PhaseISplitClusterAnalyzer::getPileupInfo(const edm::Handle<std::vector<PileupSummaryInfo>>& puInfoCollectionHandle)
+{
+	if (!m_isEventMC) return NOVAL_F;
+	static int reportNum = 0;
+	if(!puInfoCollectionHandle.isValid()) 
+	{
+		// Abandon hope all ye who enter here
+		if(reportNum++ < 20) std::cout << "Warning: The provided pileup info is invalid." << std::endl;
+		return NOVAL_F;
+	}
+	auto zerothPileup = std::find_if(puInfoCollectionHandle -> rbegin(), puInfoCollectionHandle -> rend(), [] (const auto& puInfo) { return puInfo.getBunchCrossing() == 0; });
+	if(zerothPileup == puInfoCollectionHandle -> rend()) 
+	{
+		if(reportNum++ < 20) std::cout << "Error: Cannot find the in-time pileup info." << std::endl;
+		return NOVAL_F;
+	}
+	return zerothPileup -> getTrueNumInteractions();
+}
 
 void PhaseISplitClusterAnalyzer::getModuleData(ModuleData& t_mod, const DetId& t_detId)
 {
