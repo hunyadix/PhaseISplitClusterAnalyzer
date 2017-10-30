@@ -113,6 +113,7 @@ void PhaseISplitClusterAnalyzer::generateHistogramCollections()
 
 void PhaseISplitClusterAnalyzer::handleEventStatisticsForDistributions()
 {
+	std::cout << __PRETTY_FUNCTION__ << ": " << __LINE__ << std::endl;
 	fillCummulativeDistributions();
 	fillPerEventAndPileupDependenceDistributions();
 }

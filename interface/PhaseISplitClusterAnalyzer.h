@@ -65,9 +65,15 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <array>
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <exception>
+#include <cstdio>
+#include <cstdlib>
+#include <regex>
+#include <memory>
 
 // Compiler directives
 #define EDM_ML_LOGDEBUG
@@ -191,6 +197,8 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 
 		// Private logic
 		void getModuleData(ModuleData& t_mod, const DetId& t_detId);
+		std::string executeBashScript(const std::string& t_command);
+		std::pair<std::pair<int, int>, float> transformBrilcalcLineToPileupTable(const std::string& t_line);
 
 	private:
 		// Config
@@ -239,6 +247,8 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		// edm::EDGetTokenT<MeasurementTrackerEvent>                measurementTrackerEventToken_;
 		edm::EDGetTokenT<std::vector<PileupSummaryInfo>>         m_pileupSummaryToken;
 		// edm::EDGetTokenT<edm::DetSetVector<PixelDigi>>           pixelDigiCollectionToken_;
+
+		[[noreturn, gnu::cold]] void e_brilcalc_regex() { throw std::runtime_error("Brilcalc regex matching failed."); }
 
 		// The satic assertion somehow messes up the syntax highlighting
 		// The braces should be correct here though...
