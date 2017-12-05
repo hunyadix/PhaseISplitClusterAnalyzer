@@ -42,7 +42,10 @@
   <use   name="DataFormats/Luminosity"/>
   <use   name="DQM/SiPixelPhase1Common"/>
   <library file="PhaseISplitClusterAnalyzer.cc" name="DPGAnalysisPhaseIPixelSplitClusterAnalyzerPlugin">
-    <flags CXXFLAGS="-g -D=EDM_ML_DEBUG"/>
+    <flags CXXFLAGS="-g -D=EDM_ML_DEBUG -O3"/>
+    <!-- <flags CXXFLAGS="-g -Wall -Wextra -D=EDM_ML_DEBUG -O3"/> -->
+    <!-- <flags LD_PRELOAD="~/usr/lib64/libasan.so"> -->
+    <!-- <flags CXXFLAGS="-g -fsanitize=address -D=EDM_ML_DEBUG -O3"/> -->
     <flags EDM_PLUGIN="1"/>
   </library>
 </environment>

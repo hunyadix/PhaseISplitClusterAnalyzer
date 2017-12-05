@@ -140,13 +140,16 @@ void for_each_if(Iterator begin, Iterator end, Pred p, Operation op)
 	}
 }
 
-class counter_iterator {
-   size_t m_count = 0; // Let's count a bit further
-public:
-   counter_iterator& operator++() { ++m_count; return *this; }
-   counter_iterator& operator*() { return *this; }
-   template<typename T> counter_iterator& operator=(T&&) { return *this; }
-   counter_iterator& operator=(counter_iterator&) = default; // Don't break normal assignment.
-
-   operator size_t() const { return m_count; }
-};
+template <typename ForwardIterator1, typename ForwardIterator2, typename Operation,
+	typename = decltype(*std::declval<ForwardIterator1&>(), void(), ++std::declval<ForwardIterator1&>(), void()), 
+	typename = decltype(*std::declval<ForwardIterator2&>(), void(), ++std::declval<ForwardIterator2&>(), void())>
+void double_for_each(ForwardIterator1&& begin1, ForwardIterator1&& end1,
+	ForwardIterator2&& begin2, ForwardIterator2&& end2,
+	Operation op)
+{
+	assert(std::distance(begin1, end1) == std::distance(begin2, end2));
+	for(auto i1 = begin1, i2 = begin2; i1 != end1; ++i1, ++i2)
+	{
+		op(*i1, *i2);
+	}
+}

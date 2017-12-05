@@ -68,6 +68,7 @@
 #include <array>
 #include <vector>
 #include <map>
+#include <utility>
 #include <algorithm>
 #include <exception>
 #include <cstdio>
@@ -155,7 +156,15 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 			// Others
 			EVEN_COL_CLUSTER_RATE_TOTAL_VS_PILEUP, EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP, EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP,
 			NUMBER_OF_PILEUP_DISTRIBUTION_COUNTABLES
-		};	
+		};
+		struct AreClustersPairInfo
+		{
+			enum class Type { NON_TAGGED, TAGGED };
+			AreClustersPairInfo(bool t_value, Type t_type) : m_value(t_value), m_type(t_type) {}
+			operator bool() const { return m_value; }
+			bool m_value;
+			Type m_type;
+		};
 	public:
 		// EDAnalyzer base
 		PhaseISplitClusterAnalyzer(const edm::ParameterSet& t_iConfig);
@@ -169,10 +178,27 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		virtual void endLuminosityBlock(edm::LuminosityBlock const&, edm::EventSetup const&) override final;
 		
 		// Logic
-		void  updateRunNumber();
-		void  updateLuminosityBlockNumber();
-		void  updateTimestamp();
-		float getPileupInfo(const edm::Handle<std::vector<PileupSummaryInfo>>& puInfoCollectionHandle);
+		void updateRunNumber();
+		void updateLuminosityBlockNumber();
+		void updateTimestamp();
+		[[deprecated]] void recalculateDetIdToMarkerPtrMapOld();
+		void recalculateDetIdToMarkerPtrMap();
+		void checkDetIdToMarkerPtrMap() const;
+		void dumpClusterDigiAndFlagChannels() const;
+		std::vector<std::vector<int>> getPixelMarkerValuesOnDetUnit(const edmNew::DetSet<SiPixelCluster>& t_clustersOnModule, const DetId& t_detId) const;
+		template <typename T>
+		static T getAllDigiChannelsFromClustersOnModule(const edmNew::DetSet<SiPixelCluster>& t_clustersOnModule);
+		template <typename T>
+		static T getAllDigiChannelsFromDigisOnModule(const edm::DetSet<PixelDigi>& t_digisOnModule);
+		static std::vector<int> getClusterPixelChannels(const SiPixelCluster& t_cluster);
+		static int getPixelChannel(const SiPixelCluster::Pixel& t_pixel);
+		static void printPixelChannel(const PixelDigi& t_pixel, const std::string& t_delimiter);
+		static void printPixelChannelSpaceDelimiter(const PixelDigi& t_pixel);
+		template <typename UnaryOperation>
+		static void forEachPixelForClustersOnModule(const edmNew::DetSet<SiPixelCluster>::const_iterator& t_begin, const edmNew::DetSet<SiPixelCluster>::const_iterator& t_end, UnaryOperation t_op);
+		static int getDigiMarkerValue(const SiPixelCluster::Pixel& pixelToCheck, const edm::DetSet<PixelDigi>& digiFlags);
+		static int getDigiMarkerValue(const int t_x, const int t_y, const edm::DetSet<PixelDigi>& t_digiFlags);
+		float getPileupInfo() const;
 		// ModuleClusterPlots		
 		void handleModuleClusterPlots();
 		void generateNewModuleClusterPlots();
@@ -183,8 +209,8 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		void fillCummulativeDistributions();
 		void fillPerEventAndPileupDependenceDistributions();
 		Cluster getClusterDataObject(const SiPixelCluster& t_siPixelCluster, const DetId& t_detId);
-		std::vector<std::pair<Cluster, Cluster>> getClusterPairCandidateCollection(const edmNew::DetSet<SiPixelCluster>& t_siPixelClusterDetSet);
-		bool areClustersPair(const Cluster& t_first, const Cluster& t_second);
+		std::vector<std::pair<Cluster, Cluster>> getClusterPairCandidateCollection(const edmNew::DetSet<SiPixelCluster>& t_siPixelClusterDetSet, const std::vector<std::vector<int>>& t_pixelMarkerValuesOnModule);
+		AreClustersPairInfo areClustersPair(const Cluster& t_first, const Cluster& t_second, const DetId& t_detId);
 		int clusterMinPixelCol(const Cluster& t_cluster);
 		std::vector<std::size_t> clusterMinColPixels(const Cluster& t_cluster);
 		std::vector<std::size_t> clusterMaxColPixels(const Cluster& t_cluster);
@@ -206,29 +232,35 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 
 		// Input-output
 		const std::string m_outputFilePath;
-		TFile* m_outputFile;
+		TFile* m_outputFile { nullptr };
 
 		// Data collections
 		edm::Handle<edmNew::DetSetVector<SiPixelCluster>> m_clusterCollectionHandle;
+		edm::Handle<edm::DetSetVector<PixelDigi>>         m_digiFlagsCollectionHandle;
 		edm::Handle<std::vector<PileupSummaryInfo>>       m_puInfoCollectionHandle;
+		// Utility data collections
+		// Used to hold values for cluster digis that have no corresponding markers
+		// Using unique_ptr-s to avoid issues with reallocated data members on new element inertion
+		std::vector<std::unique_ptr<edm::DetSet<PixelDigi>>> m_fakeFlagsManager;
+		std::map<DetId, const edm::DetSet<PixelDigi>*>       m_detIdToMarkerPtrMap;
 
 		// Tools
 		SiPixelCoordinates                    m_siPixelCoordinates;
-		const TrackerGeometry*                m_trackerGeometry;
-		const PixelClusterParameterEstimator* m_pixelClusterParameterEstimator;
+		const TrackerGeometry*                m_trackerGeometry { nullptr };
+		const PixelClusterParameterEstimator* m_pixelClusterParameterEstimator { nullptr };
 
 		// States
-		const edm::Event* m_iEvent;
-		bool m_isEventMC;
-		int m_runNumber;
-		int m_luminosityBlock;
-		int m_eventNumber;
-		int m_pileup;
+		const edm::Event* m_iEvent { nullptr };
+		bool m_isEventMC { false };
+		int m_runNumber { NOVAL_I };
+		int m_luminosityBlock { NOVAL_I };
+		int m_eventNumber { NOVAL_I };
+		int m_pileup { NOVAL_I };
 		// Timestamp-helpers
-		bool m_isNewRun;
-		bool m_isNewLuminosityBlock;
+		bool m_isNewRun { false };
+		bool m_isNewLuminosityBlock { false };
 		std::tuple<int, int, int> m_moduleClusterPlotsGeneratedAt;
-		int m_eventsSinceModuleClusterPlotGeneration;
+		int m_eventsSinceModuleClusterPlotGeneration { 0 };
 
 		// Module cluster plots
 		std::vector<TH2F*> m_moduleClusterPlots;
@@ -243,12 +275,16 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		// edm::EDGetTokenT<reco::VertexCollection>                 primaryVerticesToken_;
 		// edm::EDGetTokenT<edm::TriggerResults>                    triggerResultsToken_;
 		edm::EDGetTokenT<edmNew::DetSetVector<SiPixelCluster>>   m_clustersToken;
+		edm::EDGetTokenT<edm::DetSetVector<PixelDigi>>           m_digiFlagsToken;
 		// edm::EDGetTokenT<TrajTrackAssociationCollection>         trajTrackCollectionToken_;
 		// edm::EDGetTokenT<MeasurementTrackerEvent>                measurementTrackerEventToken_;
 		edm::EDGetTokenT<std::vector<PileupSummaryInfo>>         m_pileupSummaryToken;
 		// edm::EDGetTokenT<edm::DetSetVector<PixelDigi>>           pixelDigiCollectionToken_;
 
-		[[noreturn, gnu::cold]] void e_brilcalc_regex() { throw std::runtime_error("Brilcalc regex matching failed."); }
+		[[noreturn, gnu::cold]] static void e_brilcalc_regex() { throw std::runtime_error("Brilcalc regex matching failed."); }
+		[[noreturn, gnu::cold]] static void e_marker_signal_mismatch() { throw std::runtime_error("Marker signal mismatch!"); }
+		[[noreturn, gnu::cold]] static void e_marker_detId() { throw std::runtime_error("Check marker detId iteration!"); }
+		[[noreturn, gnu::cold]] static void e_marker_not_found() { throw std::runtime_error("Pixel marker not found!"); }
 
 		// The satic assertion somehow messes up the syntax highlighting
 		// The braces should be correct here though...
