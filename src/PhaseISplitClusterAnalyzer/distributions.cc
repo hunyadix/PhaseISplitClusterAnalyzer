@@ -118,12 +118,6 @@ void PhaseISplitClusterAnalyzer::generateHistogramCollections()
 	m_pileupDependenceDistributions.emplace_back(new TH2F("EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP",   "EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP",   100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
 	m_pileupDependenceDistributions.emplace_back(new TH2F("EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP",  "EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP",  100, 0.0f, 100.0f, 1000, 0.0f, 1000.0f));
 	// Digi flag related distributions
-	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_MARKED_PAIR_CANDIDATES_IN_EVENT",           "AVG_MARKED_PAIR_CANDIDATES_IN_EVENT",           100, 0.0f, 100.0f, 25000, 0.0f, 25000.0f));
-	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_MARKED_PAIR_CANDIDATES_LOW_ETA",            "AVG_MARKED_PAIR_CANDIDATES_LOW_ETA",            100, 0.0f, 100.0f, 5000,  0.0f, 5000.0f ));
-	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_MARKED_PAIR_CANDIDATES_HIGH_ETA",           "AVG_MARKED_PAIR_CANDIDATES_HIGH_ETA",           100, 0.0f, 100.0f, 5000,  0.0f, 5000.0f ));
-	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_UNMARKED_PAIR_CANDIDATES_IN_EVENT",         "AVG_UNMARKED_PAIR_CANDIDATES_IN_EVENT",         100, 0.0f, 100.0f, 25000, 0.0f, 25000.0f));
-	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_UNMARKED_PAIR_CANDIDATES_LOW_ETA",          "AVG_UNMARKED_PAIR_CANDIDATES_LOW_ETA",          100, 0.0f, 100.0f, 5000,  0.0f, 5000.0f ));
-	m_pileupDependenceDistributions.emplace_back(new TH2F("AVG_UNMARKED_PAIR_CANDIDATES_HIGH_ETA",         "AVG_UNMARKED_PAIR_CANDIDATES_HIGH_ETA",         100, 0.0f, 100.0f, 5000,  0.0f, 5000.0f ));
 	m_pileupDependenceDistributions.emplace_back(new TH2F("MARKED_PAIR_CANDIDATE_RATE_IN_EVENT_VS_PILEUP", "MARKED_PAIR_CANDIDATE_RATE_IN_EVENT_VS_PILEUP", 100, 0.0f, 100.0f, 1000, 0.0f, 100.0f));
 	m_pileupDependenceDistributions.emplace_back(new TH2F("MARKED_PAIR_CANDIDATE_RATE_LOW_ETA_VS_PILEUP",  "MARKED_PAIR_CANDIDATE_RATE_LOW_ETA_VS_PILEUP",  100, 0.0f, 100.0f, 1000, 0.0f, 100.0f ));
 	m_pileupDependenceDistributions.emplace_back(new TH2F("MARKED_PAIR_CANDIDATE_RATE_HIGH_ETA_VS_PILEUP", "MARKED_PAIR_CANDIDATE_RATE_HIGH_ETA_VS_PILEUP", 100, 0.0f, 100.0f, 1000, 0.0f, 100.0f ));
@@ -198,63 +192,75 @@ void PhaseISplitClusterAnalyzer::fillCummulativeDistributions()
 void PhaseISplitClusterAnalyzer::fillPerEventAndPileupDependenceDistributions()
 {
 	// std::unique_lock<std::mutex> lock(flags_mutex);
-	int numClustersInEvent            = 0;
-	int numClustersBarrel             = 0;
-	int numClustersForward            = 0;
-	int avgClusterSizeXOnBarrel       = 0;
-	int avgClusterSizeYOnBarrel       = 0;
-	int avgClusterSizePixelsOnBarrel  = 0;
-	int avgClusterSizeXOnForward      = 0;
-	int avgClusterSizeYOnForward      = 0;
-	int avgClusterSizePixelsOnForward = 0;
-	int numClustersLowEta             = 0;
-	int numClustersHighEta            = 0;
-	int numPairCandidatesInEvent      = 0;
-	int numPairCandidatesLowEta       = 0;
-	int numPairCandidatesHighEta      = 0;
-	int evenColCandidatesInEvent      = 0;
-	int evenColCandidatesLowEta       = 0;
-	int evenColCandidatesHighEta      = 0;
-	int avgClusterSizeXInEvent        = 0;
-	int avgClusterSizeXLowEta         = 0;
-	int avgClusterSizeXHighEta        = 0;
-	int avgClusterSizeYInEvent        = 0;
-	int avgClusterSizeYLowEta         = 0;
-	int avgClusterSizeYHighEta        = 0;
-	int avgClusterSizePixelsInEvent   = 0;
-	int avgClusterSizePixelsLowEta    = 0;
-	int avgClusterSizePixelsHighEta   = 0;
-	int numPairCandidatesInBpix       = 0;
-	int numPairCandidatesInFpix       = 0;
-	int evenColCandidatesInBpix       = 0;
-	int evenColCandidatesInFpix       = 0;
-	int numClustersLayer1             = 0;
-	int numClustersLayer2             = 0;
-	int numClustersLayer3             = 0;
-	int numClustersLayer4             = 0;
-	int numPairCandidatesLayer1       = 0;
-	int numPairCandidatesLayer2       = 0;
-	int numPairCandidatesLayer3       = 0;
-	int numPairCandidatesLayer4       = 0;
-	int evenColCandidatesLayer1       = 0;
-	int evenColCandidatesLayer2       = 0;
-	int evenColCandidatesLayer3       = 0;
-	int evenColCandidatesLayer4       = 0;
-	int avgClusterSizeXLayer1         = 0;
-	int avgClusterSizeXLayer2         = 0;
-	int avgClusterSizeXLayer3         = 0;
-	int avgClusterSizeXLayer4         = 0;
-	int avgClusterSizeYLayer1         = 0;
-	int avgClusterSizeYLayer2         = 0;
-	int avgClusterSizeYLayer3         = 0;
-	int avgClusterSizeYLayer4         = 0;
-	int avgClusterSizePixelsLayer1    = 0;
-	int avgClusterSizePixelsLayer2    = 0;
-	int avgClusterSizePixelsLayer3    = 0;
-	int avgClusterSizePixelsLayer4    = 0;
-	int evenColClustersTotal          = 0;
-	int evenColClustersLowEta         = 0;
-	int evenColClustersHighEta        = 0;
+	int   numClustersInEvent               = 0;
+	int   numClustersBarrel                = 0;
+	int   numClustersForward               = 0;
+	int   avgClusterSizeXOnBarrel          = 0;
+	int   avgClusterSizeYOnBarrel          = 0;
+	int   avgClusterSizePixelsOnBarrel     = 0;
+	int   avgClusterSizeXOnForward         = 0;
+	int   avgClusterSizeYOnForward         = 0;
+	int   avgClusterSizePixelsOnForward    = 0;
+	int   numClustersLowEta                = 0;
+	int   numClustersHighEta               = 0;
+	int   numPairCandidatesInEvent         = 0;
+	int   numPairCandidatesLowEta          = 0;
+	int   numPairCandidatesHighEta         = 0;
+	int   evenColCandidatesInEvent         = 0;
+	int   evenColCandidatesLowEta          = 0;
+	int   evenColCandidatesHighEta         = 0;
+	float avgClusterSizeXInEvent           = 0.0f;
+	float avgClusterSizeXLowEta            = 0.0f;
+	float avgClusterSizeXHighEta           = 0.0f;
+	float avgClusterSizeYInEvent           = 0.0f;
+	float avgClusterSizeYLowEta            = 0.0f;
+	float avgClusterSizeYHighEta           = 0.0f;
+	float avgClusterSizePixelsInEvent      = 0.0f;
+	float avgClusterSizePixelsLowEta       = 0.0f;
+	float avgClusterSizePixelsHighEta      = 0.0f;
+	int   numPairCandidatesInBpix          = 0;
+	int   numPairCandidatesInFpix          = 0;
+	int   evenColCandidatesInBpix          = 0;
+	int   evenColCandidatesInFpix          = 0;
+	int   numClustersLayer1                = 0;
+	int   numClustersLayer2                = 0;
+	int   numClustersLayer3                = 0;
+	int   numClustersLayer4                = 0;
+	int   numPairCandidatesLayer1          = 0;
+	int   numPairCandidatesLayer2          = 0;
+	int   numPairCandidatesLayer3          = 0;
+	int   numPairCandidatesLayer4          = 0;
+	int   evenColCandidatesLayer1          = 0;
+	int   evenColCandidatesLayer2          = 0;
+	int   evenColCandidatesLayer3          = 0;
+	int   evenColCandidatesLayer4          = 0;
+	float avgClusterSizeXLayer1            = 0.0f;
+	float avgClusterSizeXLayer2            = 0.0f;
+	float avgClusterSizeXLayer3            = 0.0f;
+	float avgClusterSizeXLayer4            = 0.0f;
+	float avgClusterSizeYLayer1            = 0.0f;
+	float avgClusterSizeYLayer2            = 0.0f;
+	float avgClusterSizeYLayer3            = 0.0f;
+	float avgClusterSizeYLayer4            = 0.0f;
+	float avgClusterSizePixelsLayer1       = 0.0f;
+	float avgClusterSizePixelsLayer2       = 0.0f;
+	float avgClusterSizePixelsLayer3       = 0.0f;
+	float avgClusterSizePixelsLayer4       = 0.0f;
+	int   numMarkedPairCandidatesInEvent   = 0;
+	int   numMarkedPairCandidatesLowEta    = 0;
+	int   numMarkedPairCandidatesHighEta   = 0;
+	int   numUnmarkedPairCandidatesInEvent = 0;
+	int   numUnmarkedPairCandidatesLowEta  = 0;
+	int   numUnmarkedPairCandidatesHighEta = 0;
+	float markedPairCandidateRateInEvent   = 0.0f;
+	float markedPairCandidateRateLowEta    = 0.0f;
+	float markedPairCandidateRateHighEta   = 0.0f;
+	int   evenColClustersTotal             = 0;
+	int   evenColClustersLowEta            = 0;
+	int   evenColClustersHighEta           = 0;
+	float evenColClusterRateTotal          = 0.0f;
+	float evenColClusterRateLowEta         = 0.0f;
+	float evenColClusterRateHighEta        = 0.0f;
 	// std::cout << "m_clusterCollectionHandle -> size(): " << m_clusterCollectionHandle -> size() << std::endl;
 	// std::cout << "std::distance(m_clusterCollectionHandle -> begin(), m_clusterCollectionHandle -> end()): " << std::distance(m_clusterCollectionHandle -> begin(), m_clusterCollectionHandle -> end()) << std::endl;
 	for(auto moduleIt = m_clusterCollectionHandle -> begin(), moduleEndIt = m_clusterCollectionHandle -> end(); moduleIt != moduleEndIt; ++moduleIt)
@@ -336,13 +342,16 @@ void PhaseISplitClusterAnalyzer::fillPerEventAndPileupDependenceDistributions()
 			}
 		}); // End of individual clusters loop
 		// Pair statistics
-		std::vector<std::pair<Cluster, Cluster>> clusterPairCandidateCollection(getClusterPairCandidateCollection(clusterCollectionOnModule, pixelMarkerValuesOnModule));
+		std::vector<std::tuple<Cluster, Cluster, bool>> clusterPairCandidateCollection(getClusterPairCandidateCollection(clusterCollectionOnModule, pixelMarkerValuesOnModule));
 		numPairCandidatesInEvent += clusterPairCandidateCollection.size();
-		for(std::size_t pairCandidateIndex = 0, maxPairCandidateIndex = clusterPairCandidateCollection.size(); pairCandidateIndex < maxPairCandidateIndex; ++pairCandidateIndex)
+		for(auto pairCandidateIt = clusterPairCandidateCollection.begin(), lastPairCandidateIt = clusterPairCandidateCollection.end(); pairCandidateIt != lastPairCandidateIt; ++pairCandidateIt)
 		{
-			const auto& pair = clusterPairCandidateCollection[pairCandidateIndex];
+			auto pair = std::make_pair<std::reference_wrapper<Cluster>, std::reference_wrapper<Cluster>>(std::get<0>(*pairCandidateIt), std::get<1>(*pairCandidateIt));
+			int marked = (std::get<2>(*pairCandidateIt)) ? 1 : 0;
 			int pairStartPixelCol = std::max(this -> clusterMinPixelCol(pair.first), this -> clusterMinPixelCol(pair.second));
 			int pairStartsOnEvenCol = pairStartPixelCol % 2 == 0;
+			numMarkedPairCandidatesInEvent += marked;
+			numUnmarkedPairCandidatesInEvent += !marked;
 			evenColCandidatesInEvent += pairStartsOnEvenCol;
 			if(mod_on.det == 0)
 			{
@@ -352,12 +361,15 @@ void PhaseISplitClusterAnalyzer::fillPerEventAndPileupDependenceDistributions()
 				{
 					numPairCandidatesLowEta++; 
 					evenColCandidatesLowEta += pairStartsOnEvenCol;
-
+					numMarkedPairCandidatesLowEta += marked;
+					numUnmarkedPairCandidatesLowEta += !marked;
 				}
 				if(std::abs(mod_on.module) == 4)
 				{
 					numPairCandidatesHighEta++;
 					evenColCandidatesHighEta += pairStartsOnEvenCol;
+					numMarkedPairCandidatesHighEta += marked;
+					numUnmarkedPairCandidatesHighEta += !marked;
 				}
 				if(mod_on.layer == 1)
 				{
@@ -389,9 +401,11 @@ void PhaseISplitClusterAnalyzer::fillPerEventAndPileupDependenceDistributions()
 	} // end of modules loop
 	if(numClustersInEvent)
 	{
-		avgClusterSizeXInEvent      = avgClusterSizeXInEvent      / numClustersInEvent;
-		avgClusterSizeYInEvent      = avgClusterSizeYInEvent      / numClustersInEvent;
-		avgClusterSizePixelsInEvent = avgClusterSizePixelsInEvent / numClustersInEvent;
+		avgClusterSizeXInEvent         = avgClusterSizeXInEvent      / numClustersInEvent;
+		avgClusterSizeYInEvent         = avgClusterSizeYInEvent      / numClustersInEvent;
+		avgClusterSizePixelsInEvent    = avgClusterSizePixelsInEvent / numClustersInEvent;
+		markedPairCandidateRateInEvent = static_cast<float>(markedPairCandidateRateInEvent) / numClustersInEvent;
+		evenColClusterRateHighEta = static_cast<float>(evenColClustersTotal) / numClustersInEvent;
 		if(numClustersBarrel)
 		{
 			avgClusterSizeXOnBarrel      = avgClusterSizeXOnBarrel / numClustersBarrel;
@@ -403,6 +417,16 @@ void PhaseISplitClusterAnalyzer::fillPerEventAndPileupDependenceDistributions()
 			avgClusterSizeXOnForward      = avgClusterSizeXOnForward / numClustersForward;
 			avgClusterSizeYOnForward      = avgClusterSizeYOnForward / numClustersForward;
 			avgClusterSizePixelsOnForward = avgClusterSizePixelsOnForward / numClustersForward;
+		}
+		if(numClustersLowEta)
+		{
+			markedPairCandidateRateLowEta = static_cast<float>(markedPairCandidateRateLowEta) / numClustersLowEta;
+			evenColClusterRateTotal = static_cast<float>(evenColClustersLowEta) / numClustersLowEta;
+		}
+		if(numClustersHighEta)
+		{
+			markedPairCandidateRateHighEta = static_cast<float>(markedPairCandidateRateHighEta) / numClustersHighEta;
+			evenColClusterRateLowEta = static_cast<float>(evenColClustersHighEta) / numClustersHighEta;
 		}
 		if(numClustersLayer1)
 		{
@@ -476,7 +500,16 @@ void PhaseISplitClusterAnalyzer::fillPerEventAndPileupDependenceDistributions()
 	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_2]  -> Fill(avgClusterSizePixelsLayer2);
 	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_3]  -> Fill(avgClusterSizePixelsLayer3);
 	m_perEventDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_4]  -> Fill(avgClusterSizePixelsLayer4);
-
+	// Digi flag related distributions
+	m_perEventDistributions[NUM_MARKED_PAIR_CANDIDATES_IN_EVENT]   -> Fill(numMarkedPairCandidatesInEvent);
+	m_perEventDistributions[NUM_MARKED_PAIR_CANDIDATES_LOW_ETA]    -> Fill(numMarkedPairCandidatesLowEta);
+	m_perEventDistributions[NUM_MARKED_PAIR_CANDIDATES_HIGH_ETA]   -> Fill(numMarkedPairCandidatesHighEta);
+	m_perEventDistributions[NUM_UNMARKED_PAIR_CANDIDATES_IN_EVENT] -> Fill(numUnmarkedPairCandidatesInEvent);
+	m_perEventDistributions[NUM_UNMARKED_PAIR_CANDIDATES_LOW_ETA]  -> Fill(numUnmarkedPairCandidatesLowEta);
+	m_perEventDistributions[NUM_UNMARKED_PAIR_CANDIDATES_HIGH_ETA] -> Fill(numUnmarkedPairCandidatesHighEta);
+	m_perEventDistributions[MARKED_PAIR_CANDIDATE_RATE_IN_EVENT]   -> Fill(markedPairCandidateRateInEvent);
+	m_perEventDistributions[MARKED_PAIR_CANDIDATE_RATE_LOW_ETA]    -> Fill(markedPairCandidateRateLowEta);
+	m_perEventDistributions[MARKED_PAIR_CANDIDATE_RATE_HIGH_ETA]   -> Fill(markedPairCandidateRateHighEta);
 	// Pileup dependence distributions
 	// Barrel-forward comparison
 	m_pileupDependenceDistributions[NUM_CLUSTERS_BARREL_VS_PILEUP]             -> Fill(m_pileup, numClustersBarrel);
@@ -505,9 +538,13 @@ void PhaseISplitClusterAnalyzer::fillPerEventAndPileupDependenceDistributions()
 	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_3_VS_PILEUP] -> Fill(m_pileup, avgClusterSizePixelsLayer3);
 	m_pileupDependenceDistributions[AVG_CLUSTER_SIZE_PIXELS_LAYER_4_VS_PILEUP] -> Fill(m_pileup, avgClusterSizePixelsLayer4);
 	// Others
-	// m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_TOTAL_VS_PILEUP]     -> Fill(m_pileup);
-	// m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP]   -> Fill(m_pileup);
-	// m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP]  -> Fill(m_pileup);
+	m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_TOTAL_VS_PILEUP]     -> Fill(m_pileup, evenColClusterRateTotal);
+	m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_LOW_ETA_VS_PILEUP]   -> Fill(m_pileup, evenColClusterRateLowEta);
+	m_pileupDependenceDistributions[EVEN_COL_CLUSTER_RATE_HIGH_ETA_VS_PILEUP]  -> Fill(m_pileup, evenColClusterRateHighEta);
+	// Digi flag related distributions
+	m_pileupDependenceDistributions[MARKED_PAIR_CANDIDATE_RATE_IN_EVENT_VS_PILEUP] -> Fill(m_pileup, markedPairCandidateRateInEvent);
+	m_pileupDependenceDistributions[MARKED_PAIR_CANDIDATE_RATE_LOW_ETA_VS_PILEUP]  -> Fill(m_pileup, markedPairCandidateRateLowEta);
+	m_pileupDependenceDistributions[MARKED_PAIR_CANDIDATE_RATE_HIGH_ETA_VS_PILEUP] -> Fill(m_pileup, markedPairCandidateRateHighEta);
 }
 
 Cluster PhaseISplitClusterAnalyzer::getClusterDataObject(const SiPixelCluster& t_siPixelCluster, const DetId& t_detId)
@@ -541,7 +578,7 @@ Cluster PhaseISplitClusterAnalyzer::getClusterDataObject(const SiPixelCluster& t
 	return clusterData;
 }
 
-std::vector<std::pair<Cluster, Cluster>> PhaseISplitClusterAnalyzer::getClusterPairCandidateCollection(const edmNew::DetSet<SiPixelCluster>& t_siPixelClusterDetSet, const std::vector<std::vector<int>>& t_pixelMarkerValuesOnModule)
+std::vector<std::tuple<Cluster, Cluster, bool>> PhaseISplitClusterAnalyzer::getClusterPairCandidateCollection(const edmNew::DetSet<SiPixelCluster>& t_siPixelClusterDetSet, const std::vector<std::vector<int>>& t_pixelMarkerValuesOnModule)
 {
 	DetId detId = t_siPixelClusterDetSet.detId();
 	std::vector<Cluster> clusterDataCollection;
@@ -549,13 +586,14 @@ std::vector<std::pair<Cluster, Cluster>> PhaseISplitClusterAnalyzer::getClusterP
 	{
 		return clusterDataCollection.emplace_back(this -> getClusterDataObject(e, detId));
 	});
-	std::vector<std::pair<Cluster, Cluster>> clusterPairCollection;
+	std::vector<std::tuple<Cluster, Cluster, bool>> clusterPairCollection;
 	for(auto firstClusterIt = clusterDataCollection.begin(); firstClusterIt != clusterDataCollection.end(); ++firstClusterIt)
 	{
 		for(auto secondClusterIt = firstClusterIt + 1; secondClusterIt != clusterDataCollection.end(); ++secondClusterIt)
 		{
-			if(!areClustersPair(*firstClusterIt, *secondClusterIt, detId)) continue;
-			clusterPairCollection.emplace_back(*firstClusterIt, *secondClusterIt);
+			auto clustersArePair = areClustersPair(*firstClusterIt, *secondClusterIt, detId);
+			if(!clustersArePair) continue;
+			clusterPairCollection.emplace_back(std::make_tuple(*firstClusterIt, *secondClusterIt, clustersArePair.m_type == AreClustersPairInfo::Type::TAGGED ? true : false));
 		}
 	}
 	return clusterPairCollection;
