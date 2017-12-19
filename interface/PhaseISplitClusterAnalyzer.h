@@ -80,6 +80,8 @@
 #define EDM_ML_LOGDEBUG
 #define ML_DEBUG
 
+class Analyzer_tester;
+
 struct ModuleClusterPlotSetup
 {
 	std::string name;
@@ -91,6 +93,7 @@ struct ModuleClusterPlotSetup
 
 class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 {
+	friend class Analyzer_tester;
 	public:
 		static constexpr int MODULE_CLUSTER_PLOT_GENERATION_FREQUENCY = 1000;
 		static constexpr int MODULE_CLUSTER_PLOT_EVENTS_TO_MERGE      = 50;
@@ -228,6 +231,9 @@ class PhaseISplitClusterAnalyzer: public edm::EDAnalyzer
 		void getModuleData(ModuleData& t_mod, const DetId& t_detId);
 		std::string executeBashScript(const std::string& t_command);
 		std::pair<std::pair<int, int>, float> transformBrilcalcLineToPileupTable(const std::string& t_line);
+
+		// Sanity checks
+		void testPairFinding();
 
 	private:
 		// Config

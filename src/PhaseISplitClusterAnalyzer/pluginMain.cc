@@ -57,6 +57,7 @@ void PhaseISplitClusterAnalyzer::analyze(const edm::Event& t_iEvent, const edm::
 	recalculateDetIdToMarkerPtrMap();
 	// The checks Should be disabled when the pileup mixing starts to work
 	checkDetIdToMarkerPtrMap();
+	// testPairFinding(); std::cin.get();
 	// Get the pileup information for the event
 	m_iEvent -> getByToken(m_pileupSummaryToken, m_puInfoCollectionHandle);
 	// Get the tracker geometry object

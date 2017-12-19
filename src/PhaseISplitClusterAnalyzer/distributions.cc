@@ -599,17 +599,27 @@ std::vector<std::tuple<Cluster, Cluster, bool>> PhaseISplitClusterAnalyzer::getC
 	return clusterPairCollection;
 }
 
+// Testable in PhaseISplitClusterAnalyzer::testPairFinding():
+// Seems like it works properly.
 PhaseISplitClusterAnalyzer::AreClustersPairInfo PhaseISplitClusterAnalyzer::areClustersPair(const Cluster& t_first, const Cluster& t_second, const DetId& t_detId)
 {
 	const Cluster& left  = t_first.x < t_second.x ? t_first  : t_second;
 	const Cluster& right = t_first.x < t_second.x ? t_second :  t_first;
+	// std::cout << "left.x: " << left.x << std::endl;
+	// std::cout << "right.x: " << right.x << std::endl;
 	const auto markerPtrs = m_detIdToMarkerPtrMap[t_detId];
 	std::vector<std::size_t> leftMaxXIndecies;
 	std::vector<std::size_t> rightMinXIndecies;
 	leftMaxXIndecies  = clusterMaxColPixels(left);
 	rightMinXIndecies = clusterMinColPixels(right);
+	// std::cout << "Rightmost pixel coordinates of the pixel on the left: (" << left.pix[leftMaxXIndecies[0]][0]   << ", " << left.pix[leftMaxXIndecies[0]][1]   << ")" << std::endl;
+	// std::cout << "Leftmost pixel coordinates of the pixel on the right: (" << right.pix[rightMinXIndecies[0]][0] << ", " << right.pix[rightMinXIndecies[0]][1] << ")" << std::endl;
+	// The floating point arithmetic could possibly fail to handle the left.pix[leftMaxXIndecies[0]][0] + 3 != right.pix[rightMinXIndecies[0]][0]
 	if(left.pix[leftMaxXIndecies[0]][0] + 3 != right.pix[rightMinXIndecies[0]][0])
 	{
+		// std::cout << "left.pix[leftMaxXIndecies[0]][0] + 3: " << left.pix[leftMaxXIndecies[0]][0] + 3 << std::endl;
+		// std::cout << "right.pix[rightMinXIndecies[0]][0]: "   << right.pix[rightMinXIndecies[0]][0] << std::endl;
+		// std::cout << "these are not equal... if they should be, change the way of floating point handling.";
 		return { false, AreClustersPairInfo::Type::NON_TAGGED };
 	}
 	bool pairFound = false;
@@ -621,9 +631,11 @@ PhaseISplitClusterAnalyzer::AreClustersPairInfo PhaseISplitClusterAnalyzer::areC
 			if(std::abs(left.pix[leftMaxXIndecies[leftMaxXPixelIndex]][1] - right.pix[rightMinXIndecies[rightMinXPixelIndex]][1]) < 3)
 			{
 				pairFound = true;
-				if(!leftPixelMarkerValue) 
-				if(leftPixelMarkerValue == 0)                            continue;
+				// Check marker on the left
+				if(leftPixelMarkerValue == 0) continue;
+				// Check marker on the right
 				if(getDigiMarkerValue(static_cast<int>(right.pix[rightMinXPixelIndex][0] + 0.5f), static_cast<int>(right.pix[rightMinXPixelIndex][1]) + 0.5f, *markerPtrs)) continue;
+				// Return if both of them are marked, otherwise try finding a better pair
 				return { true, AreClustersPairInfo::Type::TAGGED };
 			}
 		}
@@ -737,7 +749,8 @@ void PhaseISplitClusterAnalyzer::saveCummulativeDistributions()
 void PhaseISplitClusterAnalyzer::savePerEventDistributions()
 {
 	m_outputFile -> mkdir("PerEventDistributions");
-	const std::string timeStampString   = "RUN_" + std::to_string(std::get<0>(m_moduleClusterPlotsGeneratedAt)) + "/LumiBlock_" + std::to_string(std::get<1>(m_moduleClusterPlotsGeneratedAt)) + "/Event_" + std::to_string(std::get<2>(m_moduleClusterPlotsGeneratedAt));
+	// const std::string timeStampString   = "RUN_" + std::to_string(std::get<0>(m_moduleClusterPlotsGeneratedAt)) + "/LumiBlock_" + std::to_string(std::get<1>(m_moduleClusterPlotsGeneratedAt)) + "/Event_" + std::to_string(std::get<2>(m_moduleClusterPlotsGeneratedAt));
+	const std::string timeStampString = ""; // It is actually supposed to be non-timestamped to be mergeable - I wonder why I added the stamps
 	const std::string saveDirectoryName = "PerEventDistributions/" + timeStampString;
 	m_outputFile -> mkdir(saveDirectoryName.c_str());
 	m_outputFile -> cd(saveDirectoryName.c_str());
